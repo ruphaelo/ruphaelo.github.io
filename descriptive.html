@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+h1{text-align: center;}
+h2{text-align: center;}
+h3{text-align: center;}
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: dodgerblue;
+  color: white;
+  padding: 20px 30px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 40px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal1 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal1-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+/* Style the top navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+/* Right-aligned link */
+.navbar a.right {
+  float: right;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size:14px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+img {
+  margin-bottom: -4px;
+}
+
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 2px 16px;
+  color: white;
+}
+
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+</head>
+<body><div class="navbar">
+  <a href="#" onclick="steps()">steps</a>
+  <a href="#" onclick="variable()">data set</a>
+  <a href="#" onclick="descriptive()">graphics</a>
+  <a href="#" onclick="hypothesis()">hypotheses</a>
+  <a href="#" onclick="clustering()">data mining</a>
+  <a href="#" onclick="checkfinal()">get finished</a>
+  <a href="#" onclick="logout()" style="width:auto;" class="right">logout</a>
+</div><h1><br><h1>
+<p>graphics</p>
+<input type="hidden" id="inputdata" name="data">
+<div id="mytext"></div>
+<div id="mytext2"></div>
+<div id="mytext3"></div>
+<input href="#" type="button" style="background-color:dodgerblue;color:white;width:80px;height:80px;font-size:40px;border:none;cursor: pointer;" value="+" onclick="addRow('newrow')">
+<div id="content">
+<script>
+var numberofsets = 500
+var numberofinputs = 38
+var c = 0
+getData()
+function addRow(mode) {
+  var nrslides = 2
+  if(mode == 'newrow'){
+  if (typeof(Storage) !== "undefined") {
+    if (isNaN(localStorage.addrow2)){
+      localStorage.addrow2 = 0
+    }
+    if (localStorage.addrow2) {
+      localStorage.addrow2 = (Number(localStorage.addrow2)+1)%numberofsets;
+    } else {
+      localStorage.addrow2 = 1;
+    }
+  }
+  clientdata.splice(0,0,["descriptive",localStorage.addrow2,'','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''])
+  presentrow = localStorage.addrow2
+  }
+  else{
+  presentrow = mode
+  }
+  var stringpart = ''
+  for (let i = 0; i < numberofsets; i++) {
+  stringpart += `<div id="basis`+String(i)+`" class="modal">
+    <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="save(`+String(i)+`,'save')" class="close" title="Close Modal">&times;</span>
+    </div>
+    <div id="mytext`+String(i)+`"></div>
+    <div class="mySlides`+String(i)+`">
+    <p><br>Create your graphic:</p>
+    <input id="datasettitle`+String(i)+`" placeholder="data set" style="width:250px;" type="text" name="value" value="" />
+    <input type="button" value="info" onclick="document.getElementById('id1').style.display='block'"  /><br>
+    <input id="title`+String(i)+`" placeholder="graphic title" style="width:250px;" type="text" name="value" value="" />
+    <input type="button" value="info" onclick="document.getElementById('id2').style.display='block'"  /><br>
+    <div class="slideshow-container">
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/pieplot.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/barplot.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/histogram.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/density.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/boxplot.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/scatter.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/linechart.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <div class="graphicSlides`+String(i)+`">
+    <img src="/line.jpg" style="width:30%;heigth:70%"><br>
+    </div>
+    <a style="left:250px" class="prev" onclick="plusSlides2(-1,`+String(i)+`)">&#10094;</a>
+    <a class="next" style="right:250px" onclick="plusSlides2(1,`+String(i)+`)">&#10095;</a>
+    </div>
+    <select id="graphictype`+String(i)+`" onchange="whichgraphic(this,`+String(i)+`);">
+    <option value="">Choose your graphic type</option>
+    <option value="pie">pie</option>
+    <option value="barplot">barplot</option>
+    <option value="histogram">histogram/denisty</option>
+    <option value="boxplot">boxplot</option>
+    <option value="scatter">scatter/linechart/line</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id3').style.display='block'"  /><br>
+    <div id="pie`+String(i)+`" style="display: none;">
+    <input id="showmissingpie`+String(i)+`" type="checkbox"><label style="font-size:14px">show missing values</label>
+    <input id="showcountpie`+String(i)+`" type="checkbox"><label style="font-size:14px">show count</label>
+    <input id="showpercentagepie`+String(i)+`" type="checkbox"><label style="font-size:14px">show percentage</label>
+    <input type="button" value="info" onclick="document.getElementById('id4').style.display='block'"  /><br>
+    <input id="variablepie`+String(i)+`" placeholder="variable" type="text"/>
+    <input type="button" value="info" onclick="document.getElementById('id5').style.display='block'"  /><br>
+    </div>
+    <div id="barplot`+String(i)+`" style="display: none;">
+    <select id="specifybar`+String(i)+`" onchange="baryaxis(this,`+String(i)+`);">
+    <option value="">Specify your y-axis</option>
+    <option value="count">count</option>
+    <option value="percentage">percentage</option>
+    <option value="variable2">second variable</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id6').style.display='block'"  /><br>
+    <div id="missingbar`+String(i)+`" style="display: none;">
+    <input id="showmissingbar`+String(i)+`" type="checkbox"><label style="font-size:14px">show missing values</label>
+    <input id="showcountbar`+String(i)+`" type="checkbox"><label style="font-size:14px">show count</label>
+    <input id="showpercentagebar`+String(i)+`" type="checkbox"><label style="font-size:14px">show percentage</label>
+    <input type="button" value="info" onclick="document.getElementById('id4').style.display='block'"  /><br>
+    </div>
+    <div id="variable1`+String(i)+`" style="display: none;">
+    <input id="variable1bar`+String(i)+`" placeholder="variable" type="text"/>
+    <input type="button" value="info" onclick="document.getElementById('id5').style.display='block'"  /><br>
+    </div>
+    <div id="variable2`+String(i)+`" style="display: none;">
+    <input id="variable2_1bar`+String(i)+`" placeholder="variable 1" type="text"/>
+    <input id="variable2_2bar`+String(i)+`" placeholder="variable 2" type="text"/>
+    <input type="button" value="info" onclick="document.getElementById('id7').style.display='block'"  /><br>
+    </div>
+    </div>
+    <div id="boxplot`+String(i)+`" style="display: none;">
+    <input id="showmissingbox`+String(i)+`" type="checkbox"><label style="font-size:14px">show missing values</label>
+    <input id="showmeansbox`+String(i)+`" type="checkbox"><label style="font-size:14px">show means</label>
+    <input id="showmediansbox`+String(i)+`" type="checkbox"><label style="font-size:14px">show medians</label>
+    <input id="showwhiskersbox`+String(i)+`" type="checkbox"><label style="font-size:14px">show whiskers</label>
+    <input id="showouliersbox`+String(i)+`" type="checkbox"><label style="font-size:14px">show outliers</label>
+    <input type="button" value="info" onclick="document.getElementById('id8').style.display='block'"  /><br>
+    <input id="variable1box`+String(i)+`" placeholder="variable 1" type="text"/>
+    <input id="variable2box`+String(i)+`" placeholder="variable 2" type="text"/>
+    <input type="button" value="info" onclick="document.getElementById('id7').style.display='block'"  /><br>
+    </div>
+    <div id="histogram`+String(i)+`" style="display: none;">
+    <select id="hisorden`+String(i)+`" onchange="hisincluded(this,`+String(i)+`);">
+    <option value="">Specify your graphic type</option>
+    <option value="his">histogram</option>
+    <option value="den">density</option>
+    <option value="both">both</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id9').style.display='block'"  /><br>
+    <div id="cpd`+String(i)+`" style="display: none;">
+    <select id="specifyhis`+String(i)+`">
+    <option value="">Specify your y-axis</option>
+    <option value="count">count</option>
+    <option value="percentage">percentage</option>
+    <option value="density">density</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id10').style.display='block'"  /><br>
+    </div>
+    <div id="allhis`+String(i)+`" style="display: none;">
+    <div id="onlyhis`+String(i)+`" style="display: none;">
+    <input id="showcounthis`+String(i)+`" type="checkbox"><label style="font-size:14px">show count</label>
+    <input id="showpercentagehis`+String(i)+`" type="checkbox"><label style="font-size:14px">show percentage</label>
+    </div>
+    <input id="showmeanshis`+String(i)+`" type="checkbox"><label style="font-size:14px">show mean</label>
+    <input id="showquartileshis`+String(i)+`" type="checkbox"><label style="font-size:14px">show quartiles</label>
+    <input type="button" value="info" onclick="document.getElementById('id11').style.display='block'"  /><br>
+    <input id="variablehis`+String(i)+`" placeholder="variable" type="text"/>
+    <input type="button" value="info" onclick="document.getElementById('id5').style.display='block'"  /><br>
+    </div>
+    </div>
+    <div id="scatter`+String(i)+`" style="display: none;">
+    <input id="showsca`+String(i)+`" type="checkbox"><label style="font-size:14px">show scatter</label>
+    <input id="showlc`+String(i)+`" type="checkbox"><label style="font-size:14px">show linechart</label>
+    <input id="showline`+String(i)+`" type="checkbox"><label style="font-size:14px">show line</label>
+    <input type="button" value="info" onclick="document.getElementById('id12').style.display='block'"  /><br>
+    <input id="variable1sca`+String(i)+`" placeholder="variable 1" type="text"/>
+    <input id="variable2sca`+String(i)+`" placeholder="variable 2" type="text" />
+    <input type="button" value="info" onclick="document.getElementById('id7').style.display='block'"  /><br>
+    </div>
+    <div id="groupornogroup`+String(i)+`" style="display: none;">
+    <select id="groupornot`+String(i)+`" onchange="groupornot(this,`+String(i)+`);">
+    <option value="">Do you want to choose a grouping variable?</option>
+    <option value="no">no</option>
+    <option value="yes">yes</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id13').style.display='block'"  /><br>
+    <div id="variables`+String(i)+`" style="display: none;">
+    <input type="text" id="groupvariable`+String(i)+`" placeholder="grouping variable" value="">
+    <input type="button" value="info" onclick="document.getElementById('id14').style.display='block'"  /><br>
+    </div>
+    </div>
+    <br>
+    </div>
+
+    <div class="mySlides`+String(i)+`">
+    <p><br>In and excluding:</p>
+    <div class="exclude`+String(i)+`"></div>
+    <input type="hidden" id="indexex`+String(i)+`" value="">
+    <input type="hidden" id="inputcounterex`+String(i)+`" value=0>
+    <input type="hidden" id="excludingall`+String(i)+`" value="">
+    <input type="button" value="info" onclick="document.getElementById('id15').style.display='block'"  /><br>
+    <br>
+    </div>
+
+    <a style="left:0px" class="prev" onclick="plusSlides(-1,`+i+`,`+nrslides+`)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1,`+i+`,`+nrslides+`)">&#10095;</a>
+    <button style="font-size:14px;padding:16px20px;background-color:#228B22" type="button" onclick="save(`+String(i)+`,'save')" class="cancelbtn">Save</button><br><br><br>
+
+    </div>
+    </div>`
+  }
+  totalstring = `
+    <label style="font-size:14px" id="showtitle`+presentrow+`">graphic `+clientdata.length+`</label><br>
+    <input id="`+presentrow+`" type="button" value="my graphics" onclick="getbasis(this.id);currentSlide(1,this.id,`+nrslides+`);currentSlide2(1,this.id)"  />
+    <input type="button" value="copy" onclick="copy('descriptive',`+presentrow+`)" />
+    <input type="button" value="delete" onclick="removeRow(this,'descriptive',`+presentrow+`)" />
+ `  +stringpart+
+    `
+    <div id="id1" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id1').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Fill in the number of the data set you want to create a graphic with.</p>
+      </div>
+    </form>
+    </div>
+    
+    <div id="id2" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id2').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Fill in a title for your graphic.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id3" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id3').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Click through the different graphic types and choose.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id4" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id4').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Here you can choose if you want your missing values, as well as the count and the percentage of each value to be shown.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id5" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id5').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Fill in the concerning variable.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id6" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id6').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Do you want the y-axis of your graphic to show the count or percentage of your variable or the values of a second variable?</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id7" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id7').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Variable 1 will be the x and variable 2 the y-axis.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id8" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id8').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Here you can choose if you want your missing values, as well as means, medians, whiskers and outliers of each value to be shown.</p>
+      </div>
+    </form>
+    </div>
+    
+
+    <div id="id9" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id9').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>You can choose between histogram, density or you can combine histogram and density.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id10" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id10').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Do you want the y-axis of your graphic to show the count, percentage or density of your variable?</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id11" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id11').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Here you can choose if you want the count and the percentage of each value as well as the mean and the quartiles of your variable to be shown.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id12" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id12').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Here you can choose if you want a scatter, a linechart and a regression line to be shown.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id13" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id13').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>With a grouping variable there will be multiple bars within every group of your first variable.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id14" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id14').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Fill in the concerning grouping variable.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id15" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id15').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Here you can in or exclude cases from your data set that will be used for your graphic. The = only-operator keeps all cases having a certain value within a specific variable. The !=-operator on the other deletes all those cases. The < (smaller than) and > (bigger than) operator only work for numeric variables. They keep all cases to which apllies that the values of a specific variable are smaller or bigger than a certain value.</p>
+      </div>
+    </form>
+    </div>
+
+
+    
+</div>
+  `;
+  const div = document.createElement('div');
+  div.className = 'row';
+  div.innerHTML = totalstring;
+  document.getElementById('content').appendChild(div);
+  inputcounterex = document.getElementById('inputcounterex'+presentrow).value
+  $(document).ready(function() {
+  createNextEx(presentrow,0,'normal');
+  });
+  click("descriptive",presentrow);
+};
+function save(id,mode){
+    datatitle = document.getElementById("datasettitle"+String(id)).value;
+    graphictitle = document.getElementById("title"+String(id)).value;
+    graphictype = document.getElementById("graphictype"+String(id)).value;
+    showmissingpie = document.getElementById("showmissingpie"+String(id)).checked;
+    showcountpie = document.getElementById("showcountpie"+String(id)).checked;
+    showpercentagepie = document.getElementById("showpercentagepie"+String(id)).checked;
+    variablepie = document.getElementById("variablepie"+String(id)).value;
+    specifybar = document.getElementById("specifybar"+String(id)).value;
+    showmissingbar = document.getElementById("showmissingbar"+String(id)).checked;
+    showcountbar = document.getElementById("showcountbar"+String(id)).checked;
+    showpercentagebar = document.getElementById("showpercentagebar"+String(id)).checked;
+    variable1bar = document.getElementById("variable1bar"+String(id)).value;
+    variable2_1bar = document.getElementById("variable2_1bar"+String(id)).value;
+    variable2_2bar = document.getElementById("variable2_2bar"+String(id)).value;
+    showmeansbox = document.getElementById("showmeansbox"+String(id)).checked;
+    showmediansbox = document.getElementById("showmediansbox"+String(id)).checked;
+    showmissingbox = document.getElementById("showmissingbox"+String(id)).checked;
+    showwhiskersbox = document.getElementById("showwhiskersbox"+String(id)).checked;
+    showoutliersbox = document.getElementById("showouliersbox"+String(id)).checked;
+    variable1box = document.getElementById("variable1box"+String(id)).value;
+    variable2box = document.getElementById("variable2box"+String(id)).value;
+    hisorden = document.getElementById("hisorden"+String(id)).value;
+    specifyhis = document.getElementById("specifyhis"+String(id)).value;
+    showcounthis = document.getElementById("showcounthis"+String(id)).checked;
+    showpercentagehis = document.getElementById("showpercentagehis"+String(id)).checked;
+    showmeanshis = document.getElementById("showmeanshis"+String(id)).checked;
+    showquartileshis = document.getElementById("showquartileshis"+String(id)).checked;
+    variablehis = document.getElementById("variablehis"+String(id)).value;
+    showsca = document.getElementById("showsca"+String(id)).checked;
+    showlc = document.getElementById("showlc"+String(id)).checked;
+    showline = document.getElementById("showline"+String(id)).checked;
+    variable1sca = document.getElementById("variable1sca"+String(id)).value;
+    variable2sca = document.getElementById("variable2sca"+String(id)).value;
+    grouporno = document.getElementById("groupornot"+String(id)).value;
+    groupvariable = document.getElementById("groupvariable"+String(id)).value;
+    excluding = ''
+    indexexnumber = document.getElementById('indexex'+String(id)).value
+    for (var j = 0; j < indexexnumber; j++) {
+       excluding +=  document.getElementById('excluding'+String(id)+'_'+j).value+';';
+    }
+    document.getElementById('excludingall'+String(id)).value = excluding;
+   if(datatitle.includes(',')|graphictitle.includes(',')|graphictype.includes(',')|
+      variablepie.includes(',')|variable1bar.includes(',')|variable2_1bar.includes(',')|variable2_2bar.includes(',')|variable1box.includes(',')|variable2box.includes(',')|variablehis.includes(',')|variable1sca.includes(',')|
+      variable2sca.includes(',')|groupvariable.includes(',')|excluding.includes(',')|
+      datatitle.includes('[')|graphictitle.includes('[')|graphictype.includes('[')|
+      variablepie.includes('[')|variable1bar.includes('[')|variable2_1bar.includes('[')|variable2_2bar.includes('[')|variable1box.includes('[')|variable2box.includes('[')|variablehis.includes('[')|variable1sca.includes('[')|
+      variable2sca.includes('[')|groupvariable.includes('[')|excluding.includes('[')|
+      datatitle.includes(']')|graphictitle.includes(']')|graphictype.includes(']')|
+      variablepie.includes(']')|variable1bar.includes(']')|variable2_1bar.includes(']')|variable2_2bar.includes(']')|variable1box.includes(']')|variable2box.includes(']')|variablehis.includes(']')|variable1sca.includes(']')|
+      variable2sca.includes(']')|groupvariable.includes(']')|excluding.includes(']')|
+      datatitle.includes(';')|graphictitle.includes(';')|graphictype.includes(';')|
+      variablepie.includes(';')|variable1bar.includes(';')|variable2_1bar.includes(';')|variable2_2bar.includes(';')|variable1box.includes(';')|variable2box.includes(';')|variablehis.includes(';')|variable1sca.includes(';')|
+      variable2sca.includes(';')|groupvariable.includes(';')|(excluding.match(/;/g) || []).length>indexexnumber){
+    alert("You used , ; [ or ] in one or more of your input fields. Please remove it to be able to save your data.")
+   }
+   else{
+    if(mode=='copy'){
+      clientdata.splice(0,1,['descriptive',presentrow,datatitle,graphictitle,graphictype,showmissingpie,showcountpie,showpercentagepie,variablepie,specifybar,showmissingbar,showcountbar,showpercentagebar,variable1bar,
+                       variable2_1bar,variable2_2bar,showmeansbox,showmediansbox,showmissingbox,showwhiskersbox,
+                       showoutliersbox,variable1box,variable2box,hisorden,specifyhis,showcounthis,showpercentagehis,showmeanshis,showquartileshis,variablehis,showsca,
+                       showlc,showline,variable1sca,variable2sca,grouporno,groupvariable,excluding])  
+    }
+    else{
+      for (var i = 0; i < clientdata.length; i++) {
+      if ((clientdata[i][0]=='descriptive')&(clientdata[i][1] == id)){
+        clientdata.splice(i,1,['descriptive',id,datatitle,graphictitle,graphictype,showmissingpie,showcountpie,showpercentagepie,variablepie,specifybar,showmissingbar,showcountbar,showpercentagebar,variable1bar,variable2_1bar,variable2_2bar,
+                       showmeansbox,showmediansbox,showmissingbox,showwhiskersbox,
+                       showoutliersbox,variable1box,variable2box,hisorden,specifyhis,showcounthis,showpercentagehis,showmeanshis,showquartileshis,variablehis,showsca,
+                       showlc,showline,variable1sca,variable2sca,grouporno,groupvariable,excluding])  
+      };
+    }
+  }
+  document.getElementById('basis'+id).style.display='none';
+  sendData()
+  }
+};
+
+function removeRow(input,page,id) {
+  for (var i = 0; i < clientdata.length; i++) {
+    if ((clientdata[i][0] == page)&(clientdata[i][1] == id)){
+      clientdata.splice(i,1)
+    };
+  }
+  sendData();
+  descriptive()
+};
+
+function refresh(){
+for (var i = 0; i < clientdata.length; i++) {
+   refreshcopy(i)
+  }
+}
+function refreshcopy(i){
+      id = clientdata[i][1]
+      document.getElementById("showtitle"+clientdata[i][1]).innerHTML = "graphic "+(clientdata.length-i)
+      document.getElementById("datasettitle"+clientdata[i][1]).value = clientdata[i][2]
+      document.getElementById("title"+clientdata[i][1]).value = clientdata[i][3]
+      document.getElementById("graphictype"+clientdata[i][1]).value = clientdata[i][4]
+      if(clientdata[i][5]=='true'){
+        document.getElementById("showmissingpie"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showmissingpie"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][6]=='true'){
+        document.getElementById("showcountpie"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showcountpie"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][7]=='true'){
+        document.getElementById("showpercentagepie"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showpercentagepie"+clientdata[i][1]).checked = false
+      }
+      document.getElementById("variablepie"+clientdata[i][1]).value = clientdata[i][8]
+
+      document.getElementById("specifybar"+clientdata[i][1]).value = clientdata[i][9]
+      if(clientdata[i][10]=='true'){
+        document.getElementById("showmissingbar"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showmissingbar"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][11]=='true'){
+        document.getElementById("showcountbar"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showcountbar"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][12]=='true'){
+        document.getElementById("showpercentagebar"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showpercentagebar"+clientdata[i][1]).checked = false
+      }
+      document.getElementById("variable1bar"+clientdata[i][1]).value = clientdata[i][13]
+      document.getElementById("variable2_1bar"+clientdata[i][1]).value = clientdata[i][14]
+      document.getElementById("variable2_2bar"+clientdata[i][1]).value = clientdata[i][15]
+
+      if(clientdata[i][16]=='true'){
+        document.getElementById("showmeansbox"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showmeansbox"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][17]=='true'){
+        document.getElementById("showmediansbox"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showmediansbox"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][18]=='true'){
+        document.getElementById("showmissingbox"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showmissingbox"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][19]=='true'){
+        document.getElementById("showwhiskersbox"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showwhiskersbox"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][20]=='true'){
+        document.getElementById("showouliersbox"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showouliersbox"+clientdata[i][1]).checked = false
+      }
+      document.getElementById("variable1box"+clientdata[i][1]).value = clientdata[i][21]
+      document.getElementById("variable2box"+clientdata[i][1]).value = clientdata[i][22]
+      document.getElementById("hisorden"+clientdata[i][1]).value = clientdata[i][23]
+      document.getElementById("specifyhis"+clientdata[i][1]).value = clientdata[i][24]
+      
+
+
+      if(clientdata[i][25]=='true'){
+        document.getElementById("showcounthis"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showcounthis"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][26]=='true'){
+        document.getElementById("showpercentagehis"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showpercentagehis"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][27]=='true'){
+        document.getElementById("showmeanshis"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showmeanshis"+clientdata[i][1]).checked = false
+      }
+
+
+      if(clientdata[i][28]=='true'){
+        document.getElementById("showquartileshis"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showquartileshis"+clientdata[i][1]).checked = false
+      }
+      document.getElementById("variablehis"+clientdata[i][1]).value = clientdata[i][29]
+      if(clientdata[i][30]=='true'){
+        document.getElementById("showsca"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showsca"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][31]=='true'){
+        document.getElementById("showlc"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showlc"+clientdata[i][1]).checked = false
+      }
+      if(clientdata[i][32]=='true'){
+        document.getElementById("showline"+clientdata[i][1]).checked = true
+      }
+      else{
+        document.getElementById("showline"+clientdata[i][1]).checked = false
+      }
+      document.getElementById("variable1sca"+clientdata[i][1]).value = clientdata[i][33]
+      document.getElementById("variable2sca"+clientdata[i][1]).value = clientdata[i][34]
+      document.getElementById('groupornot'+id).value = clientdata[i][35]
+      document.getElementById('groupvariable'+id).value = clientdata[i][36]
+      document.getElementById('excludingall'+id).value = clientdata[i][37]
+      excludearray = clientdata[i][37].split(';')
+      for (var j = 0; j < excludearray.length-1; j++) {
+        createNextEx(id,j+1,'refresh')
+        document.getElementById('excluding'+id+'_'+j).value = excludearray[j]
+      }
+      reopen(clientdata[i][1])
+}
+function reopen(id){
+whichgraphic(document.getElementById('graphictype'+id),id)
+groupornot(document.getElementById('groupornot'+id),id)
+hisincluded(document.getElementById('hisorden'+id),id)
+baryaxis(document.getElementById('specifybar'+id),id)
+}
+function getData(){
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "server2descriptive.php", true);
+    ajax.send();
+    ajax.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        document.getElementById('inputdata').value = this.responseText;
+    }
+    loadingData();
+    };
+}
+
+function sendData() {
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "serverdescriptive.php", true);
+    ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    if(clientdata == []){
+      clientdata == '[]'
+    }
+    ajax.send("data="+clientdata);
+}
+
+function createNextGr(id,indexgr,mode) {
+    // create the next text box if not exists
+  if((indexgr==inputcountergr | mode=='refresh')&indexgr<3){
+    var next = $('<input>', {
+      id: 'grouping' + id + '_' + indexgr,
+      type: 'text',
+      placeholder: 'variable ' + (indexgr+1),
+      class: 'text-chain'
+    });
+    next.on('change', function() {
+      createNextGr(id,indexgr + 1,mode=='normal')
+    });
+    next.appendTo($('.group'+id));
+    document.getElementById('indexgr'+id).value = indexgr
+    if(mode=='refresh'){
+      inputcountergr = indexgr + 1
+    }
+    else{
+      inputcountergr = parseInt(inputcountergr) + 1
+    }
+    document.getElementById('inputcountergr'+id).value = inputcountergr
+  }
+}
+
+function createNextEx(id,indexex,mode) {
+    // create the next text box if not exists
+  if(indexex==inputcounterex | mode=='refresh'){
+    if(indexex%3==2){
+    var next = $('<input>', {
+      id: 'excluding' + id + '_' + indexex,
+      type: 'text',
+      placeholder: 'value ' + (indexex+1)/3,
+      class: 'text-chain'
+    });
+    var nextrow = $('<br>');
+    var option = $("");
+    }
+    if(indexex%3==1){
+    var next = $("<select>", {
+       id: 'excluding' + id + '_' + indexex
+    });
+    var nextrow = $('');
+    }
+    if(indexex%3==0){
+    var next = $('<input>', {
+      id: 'excluding' + id + '_' + indexex,
+      type: 'text',
+      placeholder: 'variable ' + (indexex+3)/3,
+      class: 'text-chain'
+    });
+    var nextrow = $('');
+    var option = $("");
+    }
+    next.on('change', function() {
+      createNextEx(id,indexex + 1,mode=='normal')
+    });
+    next.appendTo($('.exclude'+id));
+    nextrow.appendTo($('.exclude'+id));
+    if(indexex%3==1){
+      $('#excluding' + id + '_' + indexex).append(`<option value="${'choose'}">${'choose'}</option><option value="${'='}">${'= (only)'}</option><option value="${'!='}">${'!='}</option>
+                                                   <option value="${'<'}">${'<'}</option><option value="${'>'}">${'>'}</option>`);
+    }
+    document.getElementById('indexex'+id).value = indexex
+    if(mode=='refresh'){
+      inputcounterex = indexex + 1
+    }
+    else{
+      inputcounterex = parseInt(inputcounterex) + 1
+    }
+    document.getElementById('inputcounterex'+id).value = inputcounterex
+  }
+}function getbasis(clickedid){
+    var name = 'basis' + String(clickedid);
+    document.getElementById(name).style.display='block';
+    click("datamining",presentrow);
+}
+function click_home() {
+    // Get the modal
+for (let i = 0; i < 3; i++) {
+eval("modal"+String(i)+"= document.getElementById('id"+String(i)+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == modal"+String(i))) {
+    eval("modal"+String(i)+".style.display"+"='none';")
+  }
+  });
+};
+}
+function click(page,id) {
+    // Get the id
+eval("basis"+id+" = document.getElementById('basis"+id+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == basis"+id)) {
+    eval("save(id,'save')")
+  }
+  });
+    // Get the modal
+for (let i = 0; i < 24; i++) {
+eval("modal"+String(i)+"= document.getElementById('id"+String(i)+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == modal"+String(i))) {
+    eval("modal"+String(i)+".style.display"+"='none';")
+  }
+  });
+};
+}
+function home() {
+  location.replace("/home.html")
+}
+function price() {
+  location.replace("/price.html")
+}
+function contact() {
+  location.replace("/contact.html")
+}
+function steps() {
+  location.replace("/steps.html")
+  localStorage.addsteps = 0;
+}
+function variable() {
+  location.replace("/variable.html")
+  localStorage.addsteps = 0;
+}
+function descriptive() {
+  location.replace("/descriptive.html")
+  localStorage.addsteps = 0;
+}
+function hypothesis() {
+  location.replace("/hypothesis.html")
+  localStorage.addsteps = 0;
+}
+function clustering() {
+  location.replace("/clustering.html");
+  localStorage.addsteps = 0;
+}
+function checkfinal() {
+  location.replace("/checkfinal.html");
+  localStorage.addsteps = 0;
+}
+function logout(clientdata) {
+  localStorage.addsteps = 0;
+  location.replace("/home.html")
+}
+function changeImage() {
+
+        if (document.getElementById("imgClickAndChange").src == "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png") 
+        {
+            document.getElementById("imgClickAndChange").src = "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png";
+        }
+        else 
+        {
+            document.getElementById("imgClickAndChange").src = "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png";
+        }
+    }
+
+
+var slideIndex = 1;
+
+function plusSlides(n,clickedid,nrslides) {
+  showSlides(slideIndex += n,clickedid,nrslides);
+}
+function currentSlide(n,clickedid,nrslides) {
+  showSlides(slideIndex = n,clickedid,nrslides);
+}
+function showSlides(n,clickedid,nrslides) {
+  var slides = document.getElementsByClassName("mySlides"+String(clickedid));
+  if (n > nrslides) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length/clientdata.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  slides[slideIndex-1].style.display = "block";
+}
+
+var slideIndex2 = 1;
+
+function plusSlides2(n,clickedid) {
+  showSlides2(slideIndex2 += n,clickedid);
+}
+function currentSlide2(n,clickedid) {
+  showSlides2(slideIndex2 = n,clickedid);
+}
+function showSlides2(n,clickedid) {
+  var slides = document.getElementsByClassName("graphicSlides"+String(clickedid));
+  if (n > 8) {slideIndex2 = 1}
+  if (n < 1) {slideIndex2 = 8}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  slides[slideIndex2-1].style.display = "block";
+}
+
+
+
+function wideorlong(that,id) {
+    if (that.value == "long") {
+        document.getElementById("choose1_"+String(id)).style.display = "block";
+    } else {
+        document.getElementById("choose1_"+String(id)).style.display = "none";
+    }
+}
+
+function whichgraphic(that,id) {
+    if (that.value == "") {
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "pie") {
+        document.getElementById("pie"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "barplot") {
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("barplot"+String(id)).style.display = "block";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    if (that.value == "boxplot") {
+        document.getElementById("boxplot"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    if (that.value == "histogram") {
+        document.getElementById("histogram"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "scatter") {
+        document.getElementById("scatter"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    
+}
+function groupornot(that,id) {
+    if (that.value == "yes") {
+        document.getElementById("variables"+String(id)).style.display = "block";
+    }
+    else{
+        document.getElementById("variables"+String(id)).style.display = "none";
+    }
+}
+function baryaxis(that,id) {
+    if (that.value == "") {
+        document.getElementById("missingbar"+String(id)).style.display = "none";
+        document.getElementById("variable1"+String(id)).style.display = "none";
+        document.getElementById("variable2"+String(id)).style.display = "none";
+    }
+    if (that.value == "count" | that.value == "percentage") {
+        document.getElementById("missingbar"+String(id)).style.display = "block";
+        document.getElementById("variable1"+String(id)).style.display = "block";
+        document.getElementById("variable2"+String(id)).style.display = "none";
+    }
+    if (that.value == "variable2") {
+        document.getElementById("missingbar"+String(id)).style.display = "none";
+        document.getElementById("variable1"+String(id)).style.display = "none";
+        document.getElementById("variable2"+String(id)).style.display = "block";
+    }
+}
+function hisincluded(that,id) {
+    if (that.value == "") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "none";
+        document.getElementById("onlyhis"+String(id)).style.display = "none";
+    }
+    if (that.value == "his") {
+        document.getElementById("cpd"+String(id)).style.display = "block";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "block";
+    }
+    if (that.value == "den") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "none";
+    }
+    if (that.value == "both") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "block";
+    }
+}
+function renameornot(that,id) {
+    if (that.value == "yes") {
+        document.getElementById("renameyes"+String(id)).style.display = "block";
+    }
+    else{
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+    }
+}
+function whichhypothesis(that,id) {
+    if (that.value == "") {
+        document.getElementById("dif"+String(id)).style.display = "none";
+        document.getElementById("cor"+String(id)).style.display = "none";
+    }
+    if (that.value == "dif") {
+        document.getElementById("dif"+String(id)).style.display = "block";
+        document.getElementById("cor"+String(id)).style.display = "none";
+    }
+    if (that.value == "cor") {
+        document.getElementById("dif"+String(id)).style.display = "none";
+        document.getElementById("cor"+String(id)).style.display = "block";
+    }
+}
+function innerorbetween(that,id) {
+    if (that.value == "") {
+        document.getElementById("inner"+String(id)).style.display = "none";
+        document.getElementById("between"+String(id)).style.display = "none";
+    }
+    if (that.value == "inner") {
+        document.getElementById("inner"+String(id)).style.display = "block";
+        document.getElementById("between"+String(id)).style.display = "none";
+    }
+    if (that.value == "between") {
+        document.getElementById("inner"+String(id)).style.display = "none";
+        document.getElementById("between"+String(id)).style.display = "block";
+    }
+}
+function nomordorint(that,id) {
+    if (that.value == "") {
+        document.getElementById("nomord"+String(id)).style.display = "none";
+        document.getElementById("int"+String(id)).style.display = "none";
+    }
+    if (that.value == "nom" | that.value == "ord") {
+        document.getElementById("nomord"+String(id)).style.display = "block";
+        document.getElementById("int"+String(id)).style.display = "none";
+    }
+    if (that.value == "int") {
+        document.getElementById("nomord"+String(id)).style.display = "none";
+        document.getElementById("int"+String(id)).style.display = "block";
+    }
+}
+function deforcom(that,id) {
+    if (that.value == "") {
+        document.getElementById("def"+String(id)).style.display = "none";
+        document.getElementById("com"+String(id)).style.display = "none";
+    }
+    if (that.value == "def") {
+        document.getElementById("def"+String(id)).style.display = "block";
+        document.getElementById("com"+String(id)).style.display = "none";
+    }
+    if (that.value == "com") {
+        document.getElementById("def"+String(id)).style.display = "none";
+        document.getElementById("com"+String(id)).style.display = "block";
+    }
+}
+
+function whichgroupdif(that,id) {
+    if (that.value == "") {
+        document.getElementById("one"+String(id)).style.display = "none";
+        document.getElementById("multiple"+String(id)).style.display = "none";
+    }
+    if (that.value == "one") {
+        document.getElementById("one"+String(id)).style.display = "block";
+        document.getElementById("multiple"+String(id)).style.display = "none";
+    }
+    if (that.value == "multiple") {
+        document.getElementById("one"+String(id)).style.display = "none";
+        document.getElementById("multiple"+String(id)).style.display = "block";
+    }
+}
+function clusorgroups(that,id) {
+    if (that.value == "") {
+        document.getElementById("cluster"+String(id)).style.display = "none";
+        document.getElementById("groups"+String(id)).style.display = "none";
+    }
+    if (that.value == "cluster") {
+        document.getElementById("cluster"+String(id)).style.display = "block";
+        document.getElementById("groups"+String(id)).style.display = "none";
+    }
+    if (that.value == "groups") {
+        document.getElementById("cluster"+String(id)).style.display = "none";
+        document.getElementById("groups"+String(id)).style.display = "block";
+    }
+}
+function clusternumberornot(that,id) {
+    if (that.value == "numberclus") {
+
+        document.getElementById("numberclus"+String(id)).style.display = "block";
+    } else {
+        document.getElementById("numberclus"+String(id)).style.display = "none";
+    }
+}
+function howmanyvar(that,id) {
+    if (that.value == "" | that.value == "all") {
+        document.getElementById("create"+String(id)).style.display = "none";
+        document.getElementById("spec"+String(id)).style.display = "none";
+    }
+    if (that.value == "create") {
+        document.getElementById("create"+String(id)).style.display = "block";
+        document.getElementById("spec"+String(id)).style.display = "none";
+    }
+    if (that.value == "spec") {
+        document.getElementById("create"+String(id)).style.display = "none";
+        document.getElementById("spec"+String(id)).style.display = "block";
+    }
+}
+function whichchange(that,id) {
+    if (that.value == "") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "rename") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "block";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "join") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "block";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "val") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "block";
+        document.getElementById("val"+String(id)).style.display = "block";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "spread") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "block";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+    }
+    if (that.value == "gather") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "block";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "ex") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "block";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "com") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "block";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "new") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "block";
+    }
+}
+function howchangevar(that,id) {
+    if (that.value == "") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "valtoval") {
+        document.getElementById("valtoval"+String(id)).style.display = "block";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "valtomis") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "block";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "mistoval") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "block";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "dty") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "block";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "numeric") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "block";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "relabel") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "block";
+    }
+}
+function firstyearornot(that,id) {
+    if ((!that.value.includes("yyyy"))&that.value!="") {
+        document.getElementById("firsty"+String(id)).style.display = "block";
+    }
+   else{
+        document.getElementById("firsty"+String(id)).style.display = "none";
+   }
+}
+function addsteps() {
+  if (typeof(Storage) !== "undefined") {
+    if (localStorage.addsteps) {
+      localStorage.addsteps = (Number(localStorage.addsteps)+1)%7;
+    } else {
+      localStorage.addsteps = 1;
+    }
+  if (localStorage.addsteps == 1){
+    document.getElementById("id1").style.display = "block";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 2){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "block";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 3){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "block";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 4){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "block";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 5){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "block";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 6){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "block";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 0){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "block";
+  }
+  }
+}
+
+function copy(page,id){
+  addRow('newrow')
+  save(id,'copy')
+  refreshcopy(0)
+  save(presentrow,'save')
+};
+
+function saveall(){
+let csvContent = "clientdata:text/csv;charset=utf-8,";
+clientdata.forEach(function(rowArray) {
+    let row = rowArray.join(",");
+    csvContent += row + "\r\n";
+});
+var encodedUri = encodeURI(csvContent);
+var link = document.createElement("a");
+link.setAttribute("href", encodedUri);
+link.setAttribute("download", "C:/Users/ra57sol/Desktop/website/csv/data.csv");
+document.body.appendChild(link); // Required for FF
+
+link.click();
+};
+
+function loadingData(){
+clientdata = document.getElementById('inputdata').value
+if(clientdata=='[]'|clientdata==''){
+clientdata=[]
+}
+else{
+clientdata = clientdata.split(',');
+clientdata_new=[]
+for (var i = 0; i < (clientdata.length/numberofinputs); i++) {
+  clientdata_new.push([])
+  for (var j = 0; j < numberofinputs; j++) {
+    clientdata_new[i].push(clientdata[i*numberofinputs+j])
+  }
+}
+clientdata=clientdata_new
+}
+j = clientdata.length
+for (var i = 0; i < j; i++) {
+ clientdata[i][1] = i
+}
+for (var i = 0; i < j; i++) {
+addRow(clientdata[j-i-1][1])
+}
+refresh()
+for (var i = 0; i < j; i++) {
+save(clientdata[i][1],'reloading')
+}
+}
+</script>
+</body>
+</html>

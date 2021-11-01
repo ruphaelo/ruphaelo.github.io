@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+h1{text-align: center;}
+h2{text-align: center;}
+h3{text-align: center;}
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: dodgerblue;
+  color: white;
+  padding: 20px 30px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 40px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal1 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal1-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+/* Style the top navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+/* Right-aligned link */
+.navbar a.right {
+  float: right;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size:14px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+img {
+  margin-bottom: -4px;
+}
+
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 2px 16px;
+  color: white;
+}
+
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+</head>
+<body><div class="navbar">
+  <a href="#" onclick="steps()">steps</a>
+  <a href="#" onclick="variable()">data set</a>
+  <a href="#" onclick="descriptive()">graphics</a>
+  <a href="#" onclick="hypothesis()">hypotheses</a>
+  <a href="#" onclick="clustering()">data mining</a>
+  <a href="#" onclick="checkfinal()">get finished</a>
+  <a href="#" onclick="logout()" style="width:auto;" class="right">logout</a>
+</div><h1><br><h1>
+<p>get finished ...</p>
+<input type="hidden" id="inputdata" name="data" value="">
+<input href="#" type="button" style="background-color:dodgerblue;color:white;width:80px;height:80px;font-size:40px;border:none;cursor: pointer;" value="+" onclick="addingData()">
+<div id="content">
+</div>
+<script>
+var numberofsets = 500
+getData()
+c=0
+mistake=0
+function getData(){
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "server2check.php", true);
+    ajax.send();
+    ajax.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        document.getElementById('inputdata').value = this.responseText;
+    }
+    };
+}
+
+function getCode(){
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "server2results.php", true);
+    ajax.send();
+    ajax.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        const div = document.createElement('div');
+        div.className = 'row';
+        div.innerHTML = `<div style="font-size:14px;text-align:left;margin-left:20%;margin-right:20%;margin-top:3%;" id="inputcode">`+this.responseText+`</div>`;
+        document.getElementById('content').appendChild(div);
+    }
+    };
+}
+
+function addingData(){
+if(c==0){
+clientdata = document.getElementById('inputdata').value
+clientdata = clientdata.split('XXXhereXXXcomesXXXaXXXnewXXXarrayXXX');
+for(var i = 0; i < 4; i++){
+if(i==0){numberofinputs=29}
+if(i==1){numberofinputs=38}
+if(i==2){numberofinputs=18}
+if(i==3){numberofinputs=9}
+if(clientdata[i]=='[]'|clientdata[i]==''){
+clientdata[i]=[]
+}
+else{
+clientdata[i] = clientdata[i].split(',');
+clientdata_new=[]
+for (var j = 0; j < (clientdata[i].length/numberofinputs); j++) {
+  clientdata_new.push([])
+  for (var k = 0; k < numberofinputs; k++) {
+    clientdata_new[j].push(clientdata[i][j*numberofinputs+k])
+  }
+}
+clientdata[i]=clientdata_new
+}
+}
+count = 0
+for(var i = 0; i< 4; i++){
+for(var j = 0; j < clientdata[i].length; j++){
+  clientdata[i][clientdata[i].length-j-1][1] = count
+  addingRows(clientdata[i][clientdata[i].length-j-1],j+1)
+  count = count + 1
+}
+}
+if(mistake==0){
+  getCode()
+}
+}
+c+=1
+}
+
+function addingRows(newrow,number) {
+  presentrow = newrow[1]
+
+  if(newrow[0]=='variable'){
+  wronginputs = ''
+  if (newrow[2] == ''){
+  wronginputs += 'What do you want to do?<br><br>'
+  }
+  if (newrow[2] != '' & newrow[2] != 'join' & newrow[2] != 'new' & newrow[3] == ''){
+  wronginputs += 'add data set number<br><br>'
+  }
+  if (newrow[2] == 'rename' & (newrow[4].match(/;/g) || []).length<2){
+  wronginputs += 'fill in at least one old and one new name<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[5] == ''){
+  wronginputs += 'How many variables do you want to change?<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[5] == 'create' & newrow[6] == ''){
+  wronginputs += 'What is your old variable?<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[5] == 'create' & newrow[7] == ''){
+  wronginputs += 'name your new variable<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[5] == 'spec' & newrow[8] == ''){
+  wronginputs += 'fill in your variable(s) you want to change<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == ''){
+  wronginputs += 'How do you want to change your variable(s)?<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'valtoval' & (newrow[11].match(/;/g) || []).length<2){
+  wronginputs += 'fill in your old and new values<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'valtomis' & newrow[12] == ''){
+  wronginputs += 'fill in your old value(s)<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'mistoval' & newrow[13] == ''){
+  wronginputs += 'fill in your new value<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'dty' & newrow[14] == ''){
+  wronginputs += 'select the structure of your dates<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'dty' & newrow[14] != '' & (!newrow[14].includes('yyyy')) & newrow[15] == ''){
+  wronginputs += 'fill in the first year?<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'numeric' & newrow[16] == ''){
+  wronginputs += 'choose an operator to change your variable<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'numeric' & newrow[17] == ''){
+  wronginputs += 'fill in a number to change your variable<br><br>'
+  }
+  if (newrow[2] == 'join' & (newrow[18].match(/;/g) || []).length<4){
+  wronginputs += 'join your variables<br><br>'
+  }
+  if (newrow[2] == 'val' & newrow[9] == 'relabel' & (newrow[19].match(/;/g) || []).length<2){
+  wronginputs += 'relabel your variable<br><br>'
+  }
+  if (newrow[2] == 'spread' & newrow[20] == ''){
+  wronginputs += 'fill in a condition variable<br><br>'
+  }
+  if (newrow[2] == 'spread' & newrow[21] == ''){
+  wronginputs += 'fill in a measurement variable<br><br>'
+  }
+  if (newrow[2] == 'gather' & newrow[22] == ''){
+  wronginputs += 'fill in a condition name<br><br>'
+  }
+  if (newrow[2] == 'gather' & newrow[23] == ''){
+  wronginputs += 'fill in a measurement name<br><br>'
+  }
+  if (newrow[2] == 'gather' & (newrow[24].match(/;/g) || []).length<2){
+  wronginputs += 'fill in a at least two variables<br><br>'
+  }
+  if (newrow[2] == 'gather' & (newrow[24].match(/;;/g) || []).length!=0){
+  wronginputs += 'there are still empty variable fields<br><br>'
+  }
+  if (newrow[2] == 'ex' & (newrow[25].match(/;/g) || []).length<3){
+  wronginputs += 'in or exclude your variable(s)<br><br>'
+  }
+  if (newrow[2] == 'ex' & (newrow[25].match(/;;/g) || []).length!=0){
+  wronginputs += 'there are still empty fields (in or excluding variables)<br><br>'
+  }
+  if (newrow[2] == 'ex' & (newrow[25].match(/;/g) || []).length%3!=0){
+  wronginputs += 'fill in an operator and a value<br><br>'
+  }
+  if (newrow[2] == 'com' & newrow[26]==''){
+  wronginputs += 'fill in an id-variable<br><br>'
+  }
+  if (newrow[2] == 'com' & (newrow[27].match(/;/g) || []).length<4){
+  wronginputs += 'add data sets to be combined<br><br>'
+  }
+  if (newrow[2] == 'com' & (newrow[27].match(/;;/g) || []).length!=0){
+  wronginputs += 'there are still empty data set(s) and/or id-variable(s)<br><br>'
+  }
+  if (newrow[2] == 'com' & (newrow[27].match(/;/g) || []).length%2==1){
+  wronginputs += 'there are more data sets then id-variables<br><br>'
+  }
+  if (newrow[2] == 'com' & (newrow[27].match(/;/g) || []).length<2){
+  wronginputs += 'fill in at least two data sets<br><br>'
+  }
+  if (newrow[2] == 'new' & newrow[28] == ''){
+  wronginputs += 'add path<br><br>'
+  }
+  if (newrow[2] == 'new' & !newrow[28].endsWith('.csv') & !newrow[28].endsWith('.xsl') & !newrow[28].endsWith('.xslx') & !newrow[28].endsWith('.txt')){
+  wronginputs += 'your path has to end with .csv, .xsl, .xslx, or .txt<br><br>'
+  }
+  if(newrow[2]=='com' | newrow[2]=='new'){
+    m = 0
+    n = 0
+    for (let j = 0; j < clientdata[0].length; j++) {
+      if(clientdata[0][j][2]=='com' | clientdata[0][j][2]=='new'){
+        m += 1
+      }
+    }
+    for (let j = 0; j < clientdata[0].length-number; j++) {
+      if(clientdata[0][j][2]=='com' | clientdata[0][j][2]=='new'){
+        n += 1
+      }
+    }
+    showtitle = "data set "+(m-n)
+  }else{
+    m = 0
+    n = 0
+    for (let j = 0; j < clientdata[0].length; j++) {
+      if(clientdata[0][j][3]==newrow[3]){
+        m += 1
+      }
+    }
+    for (let j = 0; j < clientdata[0].length-number; j++) {
+      if(clientdata[0][j][3]==newrow[3]){
+        n += 1
+      }
+    }
+    showtitle = "data set "+newrow[3]+" change "+(m-n)
+  }
+  totalstring = `
+    <label style="font-size:14px" id="showtitle`+presentrow+`">`+showtitle+`</label><br>
+    <input id="`+presentrow+`" type="button" value="my data set" onclick="getbasis2(this.id);"  />
+    <div id="basis`+presentrow+`" class="modal">
+    <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('basis`+presentrow+`').style.display='none';" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <p><br>Please check again:</p><br>
+    <label style="font-size:14px" id="wronginputs`+presentrow+`">`+wronginputs+`</label>
+
+    </div>
+    </div>
+ `
+  const div = document.createElement('div');
+  div.className = 'row';
+  div.innerHTML = totalstring;
+  if(wronginputs != ''){
+  document.getElementById('content').appendChild(div);
+  mistake += 1
+  }
+  clickcheck("variable",presentrow);
+  }
+  
+
+  if(newrow[0]=='descriptive'){
+  wronginputs = ''
+  if (newrow[2] == ''){
+  wronginputs += 'add data set number<br><br>'
+  }
+  if (newrow[3] == ''){
+  wronginputs += 'add graphic title<br><br>'
+  }
+  if (newrow[4] == ''){
+  wronginputs += 'choose your graphic type<br><br>'
+  }
+  if (newrow[4] == 'pie' & newrow[8] == ''){
+  wronginputs += 'fill in a variable<br><br>'
+  }
+  if (newrow[4] == 'barplot' & newrow[9] == ''){
+  wronginputs += 'specify your y-axis<br><br>'
+  }
+  if (newrow[4] == 'barplot' & (newrow[9] == 'count' | newrow[9] == 'percentage') & newrow[13] == ''){
+  wronginputs += 'Fill in a variable<br><br>'
+  }
+  if (newrow[4] == 'barplot' & newrow[9] == 'variable2' & newrow[14] == ''){
+  wronginputs += 'Fill in variable 1<br><br>'
+  }
+  if (newrow[4] == 'barplot' & newrow[9] == 'variable2' & newrow[15] == ''){
+  wronginputs += 'Fill in variable 2<br><br>'
+  }
+  if (newrow[4] == 'boxplot' & newrow[21] == ''){
+  wronginputs += 'fill in variable 1<br><br>'
+  }
+  if (newrow[4] == 'boxplot' & newrow[22] == ''){
+  wronginputs += 'fill in variable 2<br><br>'
+  }
+  if (newrow[4] == 'histogram' & newrow[23] == ''){
+  wronginputs += 'specify your graphic type<br><br>'
+  }
+  if (newrow[4] == 'histogram' & newrow[23] == 'his' & newrow[24] == ''){
+  wronginputs += 'specify your y-axis<br><br>'
+  }
+  if (newrow[4] == 'histogram' & newrow[24] != '' & newrow[29] == ''){
+  wronginputs += 'fill in a variable<br><br>'
+  }
+  if (newrow[4] == 'scatter' & newrow[30] == 'false' & newrow[31] == 'false' & newrow[32] == 'false'){
+  wronginputs += 'choose at least one of either scatter, linechart or line<br><br>'
+  }
+  if (newrow[4] == 'scatter' & newrow[33] == ''){
+  wronginputs += 'fill in variable 1<br><br>'
+  }
+  if (newrow[4] == 'scatter' & newrow[34] == ''){
+  wronginputs += 'fill in variable 2<br><br>'
+  }
+  if ((newrow[4] == 'barplot' | newrow[4] == 'boxplot' | newrow[4] == 'scatter') & newrow[35] == ''){
+  wronginputs += 'Do you want to choose a grouping variable?<br><br>'
+  }
+  if (newrow[4] != '' & newrow[35] == 'yes' & newrow[36] == ''){
+  wronginputs += 'add a grouping variable<br><br>'
+  }
+  totalstring = `
+    <label style="font-size:14px" id="showtitle`+presentrow+`">graphic `+number+`</label><br>
+    <input id="`+presentrow+`" type="button" value="my graphics" onclick="getbasis2(this.id);"  />
+    <div id="basis`+presentrow+`" class="modal">
+    <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('basis`+presentrow+`').style.display='none';" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <p><br>Please check again:</p><br>
+    <label style="font-size:14px" id="wronginputs`+presentrow+`">`+wronginputs+`</label>
+
+    </div>
+    </div>
+ `
+  const div = document.createElement('div');
+  div.className = 'row';
+  div.innerHTML = totalstring;
+  if(wronginputs != ''){
+  document.getElementById('content').appendChild(div);
+  mistake += 1
+  }
+  clickcheck("descriptive",presentrow);
+  }
+
+
+
+
+  if(newrow[0]=='hypothesis'){
+  wronginputs = ''
+  if (newrow[2] == ''){
+  wronginputs += 'fill in a hypothesis title<br><br>'
+  }
+  if (newrow[3] == ''){
+  wronginputs += 'add data set number<br><br>'
+  }
+  if (newrow[4] == ''){
+  wronginputs += 'choose your hypothesis type<br><br>'
+  }
+  if (newrow[4] == 'dif' & newrow[5] == ''){
+  wronginputs += 'fill in an id-variable<br><br>'
+  }
+  if (newrow[4] == 'dif' & newrow[6] == ''){
+  wronginputs += 'fill in an dependend variable<br><br>'
+  }
+  if (newrow[4] == 'dif' & newrow[7] == ''){
+  wronginputs += 'choose a scale niveau<br><br>'
+  }
+  if (newrow[4] == 'dif' & (newrow[7] == 'nom' | newrow[7] == 'ord') & newrow[8] == ''){
+  wronginputs += 'fill in an independend variable<br><br>'
+  }
+  if (newrow[4] == 'dif' & (newrow[7] == 'nom' | newrow[7] == 'ord') & newrow[9] == ''){
+  wronginputs += 'choose between inner or between subject<br><br>'
+  }
+  if (newrow[4] == 'dif' & newrow[7] == 'int' & (newrow[10].match(/;/g) || []).length<1){
+  wronginputs += 'fill in at least one independend variable<br><br>'
+  }
+  if (newrow[4] == 'dif' & newrow[7] == 'int' & (newrow[10].match(/;/g) || []).length%2==1){
+  wronginputs += 'choose between group and repeated measurement<br><br>'
+  }
+  if (newrow[4] == 'dif' & newrow[7] == 'int' & (newrow[10].match(/;;/g) || []).length!=0){
+  wronginputs += 'there are still empty fields (independend variable)<br><br>'
+  }
+  if (newrow[4] == 'cor' & newrow[11] == ''){
+  wronginputs += 'choose a direction of your correlation<br><br>'
+  }
+  if (newrow[4] == 'cor' & newrow[12] == ''){
+  wronginputs += 'fill in variable 1<br><br>'
+  }
+  if (newrow[4] == 'cor' & newrow[13] == ''){
+  wronginputs += 'choose a scale niveau of variable 1<br><br>'
+  }
+  if (newrow[4] == 'cor' & newrow[14] == ''){
+  wronginputs += 'fill in variable 2<br><br>'
+  }
+  if (newrow[4] == 'cor' & newrow[15] == ''){
+  wronginputs += 'choose a scale niveau of variable 2<br><br>'
+  }
+  totalstring = `
+    <label style="font-size:14px" id="showtitle`+presentrow+`">hypothesis `+number+`</label><br>
+    <input id="`+presentrow+`" type="button" value="my hypothesis" onclick="getbasis2(this.id);"  />
+    <div id="basis`+presentrow+`" class="modal">
+    <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('basis`+presentrow+`').style.display='none';" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <p><br>Please check again:</p><br>
+    <label style="font-size:14px" id="wronginputs`+presentrow+`">`+wronginputs+`</label>
+
+    </div>
+    </div>
+ `
+  const div = document.createElement('div');
+  div.className = 'row';
+  div.innerHTML = totalstring;
+  if(wronginputs != ''){
+  document.getElementById('content').appendChild(div);
+  mistake += 1
+  }
+  clickcheck("hypothesis",presentrow);
+  }
+
+
+
+  if(newrow[0]=='datamining'){
+    wronginputs = ''
+  if (newrow[2] == ''){
+  wronginputs += 'add data set number<br><br>'
+  }
+  if ((newrow[3].match(/;/g) || []).length<11){
+  wronginputs += 'add at least 5 variables with scale niveau<br><br>'
+  }
+  if (newrow[4] == ''){
+  wronginputs += 'What do you want to predict?<br><br>'
+  }
+  if (newrow[4] == 'cluster' & newrow[5] == ''){
+  wronginputs += 'Do you need a specific number of clusters?<br><br>'
+  }
+  if (newrow[4] == 'cluster' & newrow[5] == 'yes' & newrow[6] == ''){
+  wronginputs += 'add a number of clusters<br><br>'
+  }
+  if (newrow[4] == 'groups' & newrow[7] == ''){
+  wronginputs += 'add a grouping variable<br><br>'
+  }
+  totalstring = `
+    <label style="font-size:14px" id="showtitle`+presentrow+`">basis `+number+`</label><br>
+    <input id="`+presentrow+`" type="button" value="my basis" onclick="getbasis2(this.id);"  />
+    <div id="basis`+presentrow+`" class="modal">
+    <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('basis`+presentrow+`').style.display='none';" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <p><br>Please check again:</p><br>
+    <label style="font-size:14px" id="wronginputs`+presentrow+`">`+wronginputs+`</label>
+
+    </div>
+    </div>
+ `
+  const div = document.createElement('div');
+  div.className = 'row';
+  div.innerHTML = totalstring;
+  if(wronginputs != ''){
+  document.getElementById('content').appendChild(div);
+  mistake += 1
+  }
+  clickcheck("datamining",presentrow);
+  }
+};
+
+function getbasis2(clickedid){
+    var name = 'basis' + String(clickedid);
+    document.getElementById(name).style.display='block';
+    clickcheck("dataset",presentrow);
+}
+
+function clickcheck(page,id) {
+    // Get the id
+eval("basis"+id+" = document.getElementById('basis"+id+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == basis"+id)) {
+    document.getElementById('basis'+id).style.display='none'
+  }
+  });
+}
+
+function getbasis(clickedid){
+    var name = 'basis' + String(clickedid);
+    document.getElementById(name).style.display='block';
+    click("datamining",presentrow);
+}
+function click_home() {
+    // Get the modal
+for (let i = 0; i < 3; i++) {
+eval("modal"+String(i)+"= document.getElementById('id"+String(i)+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == modal"+String(i))) {
+    eval("modal"+String(i)+".style.display"+"='none';")
+  }
+  });
+};
+}
+function click(page,id) {
+    // Get the id
+eval("basis"+id+" = document.getElementById('basis"+id+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == basis"+id)) {
+    eval("save(id,'save')")
+  }
+  });
+    // Get the modal
+for (let i = 0; i < 24; i++) {
+eval("modal"+String(i)+"= document.getElementById('id"+String(i)+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == modal"+String(i))) {
+    eval("modal"+String(i)+".style.display"+"='none';")
+  }
+  });
+};
+}
+function home() {
+  location.replace("/home.html")
+}
+function price() {
+  location.replace("/price.html")
+}
+function contact() {
+  location.replace("/contact.html")
+}
+function steps() {
+  location.replace("/steps.html")
+  localStorage.addsteps = 0;
+}
+function variable() {
+  location.replace("/variable.html")
+  localStorage.addsteps = 0;
+}
+function descriptive() {
+  location.replace("/descriptive.html")
+  localStorage.addsteps = 0;
+}
+function hypothesis() {
+  location.replace("/hypothesis.html")
+  localStorage.addsteps = 0;
+}
+function clustering() {
+  location.replace("/clustering.html");
+  localStorage.addsteps = 0;
+}
+function checkfinal() {
+  location.replace("/checkfinal.html");
+  localStorage.addsteps = 0;
+}
+function logout(clientdata) {
+  localStorage.addsteps = 0;
+  location.replace("/home.html")
+}
+function changeImage() {
+
+        if (document.getElementById("imgClickAndChange").src == "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png") 
+        {
+            document.getElementById("imgClickAndChange").src = "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png";
+        }
+        else 
+        {
+            document.getElementById("imgClickAndChange").src = "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png";
+        }
+    }
+
+
+var slideIndex = 1;
+
+function plusSlides(n,clickedid,nrslides) {
+  showSlides(slideIndex += n,clickedid,nrslides);
+}
+function currentSlide(n,clickedid,nrslides) {
+  showSlides(slideIndex = n,clickedid,nrslides);
+}
+function showSlides(n,clickedid,nrslides) {
+  var slides = document.getElementsByClassName("mySlides"+String(clickedid));
+  if (n > nrslides) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length/clientdata.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  slides[slideIndex-1].style.display = "block";
+}
+
+var slideIndex2 = 1;
+
+function plusSlides2(n,clickedid) {
+  showSlides2(slideIndex2 += n,clickedid);
+}
+function currentSlide2(n,clickedid) {
+  showSlides2(slideIndex2 = n,clickedid);
+}
+function showSlides2(n,clickedid) {
+  var slides = document.getElementsByClassName("graphicSlides"+String(clickedid));
+  if (n > 8) {slideIndex2 = 1}
+  if (n < 1) {slideIndex2 = 8}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  slides[slideIndex2-1].style.display = "block";
+}
+
+
+
+function wideorlong(that,id) {
+    if (that.value == "long") {
+        document.getElementById("choose1_"+String(id)).style.display = "block";
+    } else {
+        document.getElementById("choose1_"+String(id)).style.display = "none";
+    }
+}
+
+function whichgraphic(that,id) {
+    if (that.value == "") {
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "pie") {
+        document.getElementById("pie"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "barplot") {
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("barplot"+String(id)).style.display = "block";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    if (that.value == "boxplot") {
+        document.getElementById("boxplot"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    if (that.value == "histogram") {
+        document.getElementById("histogram"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "scatter") {
+        document.getElementById("scatter"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    
+}
+function groupornot(that,id) {
+    if (that.value == "yes") {
+        document.getElementById("variables"+String(id)).style.display = "block";
+    }
+    else{
+        document.getElementById("variables"+String(id)).style.display = "none";
+    }
+}
+function baryaxis(that,id) {
+    if (that.value == "") {
+        document.getElementById("missingbar"+String(id)).style.display = "none";
+        document.getElementById("variable1"+String(id)).style.display = "none";
+        document.getElementById("variable2"+String(id)).style.display = "none";
+    }
+    if (that.value == "count" | that.value == "percentage") {
+        document.getElementById("missingbar"+String(id)).style.display = "block";
+        document.getElementById("variable1"+String(id)).style.display = "block";
+        document.getElementById("variable2"+String(id)).style.display = "none";
+    }
+    if (that.value == "variable2") {
+        document.getElementById("missingbar"+String(id)).style.display = "none";
+        document.getElementById("variable1"+String(id)).style.display = "none";
+        document.getElementById("variable2"+String(id)).style.display = "block";
+    }
+}
+function hisincluded(that,id) {
+    if (that.value == "") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "none";
+        document.getElementById("onlyhis"+String(id)).style.display = "none";
+    }
+    if (that.value == "his") {
+        document.getElementById("cpd"+String(id)).style.display = "block";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "block";
+    }
+    if (that.value == "den") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "none";
+    }
+    if (that.value == "both") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "block";
+    }
+}
+function renameornot(that,id) {
+    if (that.value == "yes") {
+        document.getElementById("renameyes"+String(id)).style.display = "block";
+    }
+    else{
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+    }
+}
+function whichhypothesis(that,id) {
+    if (that.value == "") {
+        document.getElementById("dif"+String(id)).style.display = "none";
+        document.getElementById("cor"+String(id)).style.display = "none";
+    }
+    if (that.value == "dif") {
+        document.getElementById("dif"+String(id)).style.display = "block";
+        document.getElementById("cor"+String(id)).style.display = "none";
+    }
+    if (that.value == "cor") {
+        document.getElementById("dif"+String(id)).style.display = "none";
+        document.getElementById("cor"+String(id)).style.display = "block";
+    }
+}
+function innerorbetween(that,id) {
+    if (that.value == "") {
+        document.getElementById("inner"+String(id)).style.display = "none";
+        document.getElementById("between"+String(id)).style.display = "none";
+    }
+    if (that.value == "inner") {
+        document.getElementById("inner"+String(id)).style.display = "block";
+        document.getElementById("between"+String(id)).style.display = "none";
+    }
+    if (that.value == "between") {
+        document.getElementById("inner"+String(id)).style.display = "none";
+        document.getElementById("between"+String(id)).style.display = "block";
+    }
+}
+function nomordorint(that,id) {
+    if (that.value == "") {
+        document.getElementById("nomord"+String(id)).style.display = "none";
+        document.getElementById("int"+String(id)).style.display = "none";
+    }
+    if (that.value == "nom" | that.value == "ord") {
+        document.getElementById("nomord"+String(id)).style.display = "block";
+        document.getElementById("int"+String(id)).style.display = "none";
+    }
+    if (that.value == "int") {
+        document.getElementById("nomord"+String(id)).style.display = "none";
+        document.getElementById("int"+String(id)).style.display = "block";
+    }
+}
+function deforcom(that,id) {
+    if (that.value == "") {
+        document.getElementById("def"+String(id)).style.display = "none";
+        document.getElementById("com"+String(id)).style.display = "none";
+    }
+    if (that.value == "def") {
+        document.getElementById("def"+String(id)).style.display = "block";
+        document.getElementById("com"+String(id)).style.display = "none";
+    }
+    if (that.value == "com") {
+        document.getElementById("def"+String(id)).style.display = "none";
+        document.getElementById("com"+String(id)).style.display = "block";
+    }
+}
+
+function whichgroupdif(that,id) {
+    if (that.value == "") {
+        document.getElementById("one"+String(id)).style.display = "none";
+        document.getElementById("multiple"+String(id)).style.display = "none";
+    }
+    if (that.value == "one") {
+        document.getElementById("one"+String(id)).style.display = "block";
+        document.getElementById("multiple"+String(id)).style.display = "none";
+    }
+    if (that.value == "multiple") {
+        document.getElementById("one"+String(id)).style.display = "none";
+        document.getElementById("multiple"+String(id)).style.display = "block";
+    }
+}
+function clusorgroups(that,id) {
+    if (that.value == "") {
+        document.getElementById("cluster"+String(id)).style.display = "none";
+        document.getElementById("groups"+String(id)).style.display = "none";
+    }
+    if (that.value == "cluster") {
+        document.getElementById("cluster"+String(id)).style.display = "block";
+        document.getElementById("groups"+String(id)).style.display = "none";
+    }
+    if (that.value == "groups") {
+        document.getElementById("cluster"+String(id)).style.display = "none";
+        document.getElementById("groups"+String(id)).style.display = "block";
+    }
+}
+function clusternumberornot(that,id) {
+    if (that.value == "numberclus") {
+
+        document.getElementById("numberclus"+String(id)).style.display = "block";
+    } else {
+        document.getElementById("numberclus"+String(id)).style.display = "none";
+    }
+}
+function howmanyvar(that,id) {
+    if (that.value == "" | that.value == "all") {
+        document.getElementById("create"+String(id)).style.display = "none";
+        document.getElementById("spec"+String(id)).style.display = "none";
+    }
+    if (that.value == "create") {
+        document.getElementById("create"+String(id)).style.display = "block";
+        document.getElementById("spec"+String(id)).style.display = "none";
+    }
+    if (that.value == "spec") {
+        document.getElementById("create"+String(id)).style.display = "none";
+        document.getElementById("spec"+String(id)).style.display = "block";
+    }
+}
+function whichchange(that,id) {
+    if (that.value == "") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "rename") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "block";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "join") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "block";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "val") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "block";
+        document.getElementById("val"+String(id)).style.display = "block";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "spread") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "block";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+    }
+    if (that.value == "gather") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "block";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "ex") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "block";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "com") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "block";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "new") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "block";
+    }
+}
+function howchangevar(that,id) {
+    if (that.value == "") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "valtoval") {
+        document.getElementById("valtoval"+String(id)).style.display = "block";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "valtomis") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "block";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "mistoval") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "block";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "dty") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "block";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "numeric") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "block";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "relabel") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "block";
+    }
+}
+function firstyearornot(that,id) {
+    if ((!that.value.includes("yyyy"))&that.value!="") {
+        document.getElementById("firsty"+String(id)).style.display = "block";
+    }
+   else{
+        document.getElementById("firsty"+String(id)).style.display = "none";
+   }
+}
+function addsteps() {
+  if (typeof(Storage) !== "undefined") {
+    if (localStorage.addsteps) {
+      localStorage.addsteps = (Number(localStorage.addsteps)+1)%7;
+    } else {
+      localStorage.addsteps = 1;
+    }
+  if (localStorage.addsteps == 1){
+    document.getElementById("id1").style.display = "block";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 2){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "block";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 3){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "block";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 4){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "block";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 5){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "block";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 6){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "block";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 0){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "block";
+  }
+  }
+}
+
+function copy(page,id){
+  addRow('newrow')
+  save(id,'copy')
+  refreshcopy(0)
+  save(presentrow,'save')
+};
+
+function saveall(){
+let csvContent = "clientdata:text/csv;charset=utf-8,";
+clientdata.forEach(function(rowArray) {
+    let row = rowArray.join(",");
+    csvContent += row + "\r\n";
+});
+var encodedUri = encodeURI(csvContent);
+var link = document.createElement("a");
+link.setAttribute("href", encodedUri);
+link.setAttribute("download", "C:/Users/ra57sol/Desktop/website/csv/data.csv");
+document.body.appendChild(link); // Required for FF
+
+link.click();
+};
+
+function loadingData(){
+clientdata = document.getElementById('inputdata').value
+if(clientdata=='[]'|clientdata==''){
+clientdata=[]
+}
+else{
+clientdata = clientdata.split(',');
+clientdata_new=[]
+for (var i = 0; i < (clientdata.length/numberofinputs); i++) {
+  clientdata_new.push([])
+  for (var j = 0; j < numberofinputs; j++) {
+    clientdata_new[i].push(clientdata[i*numberofinputs+j])
+  }
+}
+clientdata=clientdata_new
+}
+j = clientdata.length
+for (var i = 0; i < j; i++) {
+ clientdata[i][1] = i
+}
+for (var i = 0; i < j; i++) {
+addRow(clientdata[j-i-1][1])
+}
+refresh()
+for (var i = 0; i < j; i++) {
+save(clientdata[i][1],'reloading')
+}
+}
+</script>
+</body>
+</html>

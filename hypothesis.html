@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+h1{text-align: center;}
+h2{text-align: center;}
+h3{text-align: center;}
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: dodgerblue;
+  color: white;
+  padding: 20px 30px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 40px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal1 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal1-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+/* Style the top navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+/* Right-aligned link */
+.navbar a.right {
+  float: right;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size:14px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+img {
+  margin-bottom: -4px;
+}
+
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 2px 16px;
+  color: white;
+}
+
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+</head>
+<body><div class="navbar">
+  <a href="#" onclick="steps()">steps</a>
+  <a href="#" onclick="variable()">data set</a>
+  <a href="#" onclick="descriptive()">graphics</a>
+  <a href="#" onclick="hypothesis()">hypotheses</a>
+  <a href="#" onclick="clustering()">data mining</a>
+  <a href="#" onclick="checkfinal()">get finished</a>
+  <a href="#" onclick="logout()" style="width:auto;" class="right">logout</a>
+</div><h1><br><h1>
+<p>hypotheses</p>
+<input type="hidden" id="inputdata" name="data">
+<div id="mytext"></div>
+<div id="mytext2"></div>
+<div id="mytext3"></div>
+<input href="#" type="button" style="background-color:dodgerblue;color:white;width:80px;height:80px;font-size:40px;border:none;cursor: pointer;" value="+" onclick="addRow('newrow')">
+<div id="content">
+<script>
+var numberofsets = 500
+var numberofinputs = 18
+var c = 0
+getData()
+function addRow(mode) {
+  var nrslides = 2
+  if(mode == 'newrow'){
+  if (typeof(Storage) !== "undefined") {
+    if (isNaN(localStorage.addrow3)){
+      localStorage.addrow3 = 0
+    }
+    if (localStorage.addrow) {
+      localStorage.addrow3 = (Number(localStorage.addrow3)+1)%numberofsets;
+    } else {
+      localStorage.addrow3 = 1;
+    }
+  }
+  clientdata.splice(0,0,["hypothesis",localStorage.addrow3,'','','','','','','','','','','','','','','','',''])
+  presentrow = localStorage.addrow3
+  }
+  else{
+  presentrow = mode
+  }
+  var stringpart = ''
+  for (let i = 0; i < numberofsets; i++) {
+  stringpart += `<div id="basis`+String(i)+`" class="modal">
+    <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="save(`+String(i)+`,'save')" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <div class="mySlides`+String(i)+`">
+    <div id="mytext`+String(i)+`"></div>
+    <p><br>Create your hypothesis:</p>
+    <input id="datatitle`+String(i)+`" placeholder="data set" style="width:250px;" type="text" name="value" value="" />
+    <input type="button" value="info" onclick="document.getElementById('id1').style.display='block'"  /><br>
+    <input id="hypothesistitle`+String(i)+`" placeholder="hypothesis title" style="width:250px;" type="text" name="value" value="" />
+    <input type="button" value="info" onclick="document.getElementById('id2').style.display='block'"  /><br>
+    <select id="hypothesistype`+String(i)+`" onchange="whichhypothesis(this,`+String(i)+`);">
+    <option value="">Choose your hypothesis type</option>
+    <option value="dif">group differences / experimental design</option>
+    <option value="cor">correlation</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id3').style.display='block'"  /><br>
+    <div id="dif`+String(i)+`" style="display: none;">
+    <input id="idvariable`+String(i)+`" placeholder="id-variable" style="width:250px;" type="text" name="value" value="" />
+    <input type="button" value="info" onclick="document.getElementById('id4').style.display='block'"  /><br>
+    <input id="depending`+String(i)+`" placeholder="dependend variable" style="width:250px;" type="text" name="value" value="" />
+    <select id="depscale`+String(i)+`" onchange="nomordorint(this,`+String(i)+`);">
+    <option value="">scale niveau</option>
+    <option value="nom">nominal</option>
+    <option value="ord">ordinal</option>
+    <option value="int">interval</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id5').style.display='block'"  /><br>
+    <div id="nomord`+String(i)+`" style="display: none;">
+    <input id="independend`+String(i)+`" placeholder="independend" style="width:250px;" type="text" name="value" value="" />
+    <select id="inorbet`+String(i)+`">
+    <option value="">choose</option>
+    <option value="inner">inner subject</option>
+    <option value="between">between subject</option>
+    </select>
+    <input type="button" value="info" onclick="document.getElementById('id6').style.display='block'"  /><br>
+    </div>
+    <div id="int`+String(i)+`" style="display: none;">
+    <div class="independing`+String(i)+`"></div>
+    <input type="hidden" id="indexind`+String(i)+`" value="">
+    <input type="hidden" id="inputcounterind`+String(i)+`" value=0>
+    <input type="hidden" id="independingall`+String(i)+`" value="">
+    <input type="button" value="info" onclick="document.getElementById('id7').style.display='block'"  /><br>
+    </div>
+    </div>
+    
+    <div id="cor`+String(i)+`" style="display: none;">
+    <label style="font-size:15px">There is</label>
+    <select id="direction`+String(i)+`" name="direction" id="direction">
+    <option value="">choose</option>
+    <option value="no">no</option>
+    <option value="pos">a positive</option>
+    <option value="neg">a negative</option>
+    <option value="und">an undefined</option>
+    </select>
+    <label style="font-size:15px">correlation between</label>
+    <input id="variable1`+String(i)+`" placeholder="variable name" style="width:250px;" type="text" name="value" value="" />
+    <select id="variable1scale`+String(i)+`" name="scale1" id="scale1">
+    <option value="">scale niveau</option>
+    <option value="ord">ordinal</option>
+    <option value="int">interval</option>
+    </select>
+    <label style="font-size:15px">and</label>
+    <input id="variable2`+String(i)+`" placeholder="variable name" style="width:250px;" type="text" name="value" value="" />
+    <select id="variable2scale`+String(i)+`" name="scale2" id="scale2">
+    <option value="">scale niveau</option>
+    <option value="ord">ordinal</option>
+    <option value="int">interval</option>
+    </select>
+    <label style="font-size:15px">.</label>
+    <input type="button" value="info" onclick="document.getElementById('id8').style.display='block'"  /><br>
+    </div>
+
+    <div id="com`+String(i)+`" style="display: none;">
+    <div class="combine`+String(i)+`"></div>
+    <input type="hidden" id="indexcom`+String(i)+`" value="">
+    <input type="hidden" id="inputcountercom`+String(i)+`" value=0>
+    <input type="hidden" id="combiningall`+String(i)+`" value="">
+    <input type="button" value="info" onclick="document.getElementById('id9').style.display='block'"  /><br>
+    </div>
+    <br>
+    </div>
+
+    <div class="mySlides`+String(i)+`">
+    <p><br>In and excluding:</p>
+    <div class="exclude`+String(i)+`"></div>
+    <input type="hidden" id="indexex`+String(i)+`" value="">
+    <input type="hidden" id="inputcounterex`+String(i)+`" value=0>
+    <input type="hidden" id="excludingall`+String(i)+`" value="">
+    <input type="button" value="info" onclick="document.getElementById('id9').style.display='block'"  /><br>
+    <br>
+    </div>
+
+    <a style="left:0px" class="prev" onclick="plusSlides(-1,`+i+`,`+nrslides+`)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1,`+i+`,`+nrslides+`)">&#10095;</a>
+    <button style="font-size:14px;padding:16px20px;background-color:#228B22" type="button" onclick="save(`+String(i)+`,'save')" class="cancelbtn">Save</button><br><br><br>
+
+    </div>
+    </div>`
+  }
+  totalstring = `
+    <label style="font-size:14px" id="showtitle`+presentrow+`">hypothesis `+clientdata.length+`</label><br>
+    <input id="`+presentrow+`" type="button" value="my hypothesis" onclick="getbasis(this.id);currentSlide(1,this.id,`+nrslides+`)"  />
+    <input type="button" value="copy" onclick="copy('hypothesis',`+presentrow+`)" />
+    <input type="button" value="delete" onclick="removeRow(this,'hypothesis',`+presentrow+`)" />
+ `  +stringpart+
+    `
+    <div id="id1" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id1').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Fill in the number of the data set you want to create a hypothesis with.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id2" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id2').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Fill in a title for your hypothesis.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id3" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id3').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>You can either examine if there is a difference between two or more groups or you examine a correlation between two variables.</p>
+      </div>
+    </form>
+    </div>
+    
+
+    <div id="id4" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id4').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>An id-variable is the variable giving the participants their identification.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id5" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id5').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>A depend variable is the variable you want to examine within different groups. Your dependend variable can have nominal/categorial scale niveau (e.g. gender - no order between different groups), ordinal scale niveau (e.g. marks in school - order between different categories, but no proportional intervals) and interval scale niveau (e.g. age - order and propotionality).</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id6" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id6').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>The independend variable is the variable which describes the different groups you want to campare your dependend variable with. When you have an inner-subject independend variable you have different participants in the different groups. When you have a between-subject independend variable you have in every group the same participants (repeated measurement). When you have a wide data format you have to create this variable first by gathering your data set.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id7" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id7').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Here you can fill in one or multiple independend variables and define if the independend variable is an inner or between subject variable. The independend variable is the variable which describes the different groups you want to campare your dependend variable with. When you have an inner-subject independend variable you have different participants in the different groups. When you have a between-subject independend variable you have in every group the same participants (repeated measurement). When you have a wide data format you have to create this variable first by gathering your data set.</p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id8" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id8').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Fill in the variable names of the variables you want to correlate and choose if they are ordinal (e.g. marks in school - order between different categories, but no proportional intervals) or interval scaled (e.g. age - order and propotionality). </p>
+      </div>
+    </form>
+    </div>
+
+    <div id="id9" class="modal1">
+    <form class="modal1-content animate">
+      <div class="imgcontainer">
+      <span onclick="document.getElementById('id9').style.display='none'" class="close" title="Close Modal">&times;</span>
+      </div>
+      <div class="container">
+        <p>Here you can in or exclude cases from your data set that will be used for your hypothesis. The = only-operator keeps all cases having a certain value within a specific variable. The !=-operator on the other deletes all those cases. The < (smaller than) and > (bigger than) operator only work for numeric variables. They keep all cases to which apllies that the values of a specific variable are smaller or bigger than a certain value.</p>
+      </div>
+    </form>
+    </div>
+</div>
+  `;
+  const div = document.createElement('div');
+  div.className = 'row';
+  div.innerHTML = totalstring;
+  document.getElementById('content').appendChild(div);
+  inputcounterex = document.getElementById('inputcounterex'+presentrow).value
+  $(document).ready(function() {
+  createNextEx(presentrow,0,'normal');
+  });
+  inputcounterind = document.getElementById('inputcounterind'+presentrow).value
+  $(document).ready(function() {
+  createNextInd(presentrow,0,'normal');
+  });
+  inputcountercom = document.getElementById('inputcountercom'+presentrow).value
+  $(document).ready(function() {
+  createNextCom(presentrow,0,'normal');
+  });
+  click("hypothesis",presentrow);
+};
+function save(id,mode){
+    hypothesistitle = document.getElementById("hypothesistitle"+String(id)).value;
+    datatitle = document.getElementById("datatitle"+String(id)).value;
+    hypothesistype = document.getElementById("hypothesistype"+String(id)).value;
+    idvariable = document.getElementById("idvariable"+String(id)).value;
+    depending = document.getElementById("depending"+String(id)).value;
+    depscale = document.getElementById("depscale"+String(id)).value;
+    independend = document.getElementById("independend"+String(id)).value;
+    inorbet = document.getElementById("inorbet"+String(id)).value;
+    independing = ''
+    indexindnumber = document.getElementById('indexind'+String(id)).value
+    for (var j = 0; j < indexindnumber; j++) {
+       independing +=  document.getElementById('independing'+String(id)+'_'+j).value+';';
+    }
+    document.getElementById('independingall'+String(id)).value = independing;
+    direction = document.getElementById("direction"+String(id)).value;
+    variable1 = document.getElementById("variable1"+String(id)).value;
+    variable1scale = document.getElementById("variable1scale"+String(id)).value;
+    variable2 = document.getElementById("variable2"+String(id)).value;
+    variable2scale = document.getElementById("variable2scale"+String(id)).value;
+    combining = ''
+    indexcomnumber = document.getElementById('indexcom'+String(id)).value
+    for (var j = 0; j < indexcomnumber; j++) {
+       combining +=  document.getElementById('combining'+String(id)+'_'+j).value+';';
+    }
+    document.getElementById('combiningall'+String(id)).value = combining;
+    excluding = ''
+    indexexnumber = document.getElementById('indexex'+String(id)).value
+    for (var j = 0; j < indexexnumber; j++) {
+       excluding +=  document.getElementById('excluding'+String(id)+'_'+j).value+';';
+    }
+    document.getElementById('excludingall'+String(id)).value = excluding;
+  if(hypothesistitle.includes(',')|datatitle.includes(',')|hypothesistype.includes(',')|idvariable.includes(',')|depending.includes(',')|independend.includes(',')|inorbet.includes(',')|independing.includes(',')|direction.includes(',')|
+     variable1.includes(',')|variable1scale.includes(',')|variable2.includes(',')|variable2scale.includes(',')|combining.includes(',')|excluding.includes(',')|
+     hypothesistitle.includes('[')|datatitle.includes('[')|hypothesistype.includes('[')|idvariable.includes('[')|depending.includes('[')|independend.includes('[')|inorbet.includes('[')|independing.includes('[')|direction.includes('[')|
+     variable1.includes('[')|variable1scale.includes('[')|variable2.includes('[')|variable2scale.includes('[')|combining.includes('[')|excluding.includes('[')|
+     hypothesistitle.includes(']')|datatitle.includes(']')|hypothesistype.includes(']')|idvariable.includes(']')|depending.includes(']')|independend.includes(']')|inorbet.includes(']')|independing.includes(']')|direction.includes(']')|
+     variable1.includes(']')|variable1scale.includes(']')|variable2.includes(']')|variable2scale.includes(']')|combining.includes(']')|excluding.includes(']')|
+     hypothesistitle.includes(';')|datatitle.includes(';')|hypothesistype.includes(';')|idvariable.includes(';')|depending.includes(';')|independend.includes(';')|inorbet.includes(';')|
+     (independing.match(/;/g) || []).length>indexindnumber|direction.includes(';')|
+     variable1.includes(';')|variable1scale.includes(';')|variable2.includes(';')|variable2scale.includes(';')|
+     (combining.match(/;/g) || []).length>indexcomnumber|(excluding.match(/;/g) || []).length>indexexnumber){
+  alert("You used , ; [ or ] in one or more of your input fields. Please remove it to be able to save your data.")
+  }
+  else{
+    if(mode=='copy'){
+      clientdata.splice(0,1,['hypothesis',presentrow,hypothesistitle,datatitle,hypothesistype,idvariable,depending,depscale,independend,inorbet,independing,direction,
+                       variable1,variable1scale,variable2,variable2scale,combining,excluding])  
+    }
+    else{
+     for (var i = 0; i < clientdata.length; i++) {
+       if ((clientdata[i][0]=='hypothesis')&(clientdata[i][1] == id)){
+         clientdata.splice(i,1,['hypothesis',id,hypothesistitle,datatitle,hypothesistype,idvariable,depending,depscale,independend,inorbet,independing,direction,
+                       variable1,variable1scale,variable2,variable2scale,combining,excluding])  
+       };
+    }
+  }
+  document.getElementById('basis'+id).style.display='none';
+  sendData()
+  }
+};
+
+function removeRow(input,page,id) {
+  for (var i = 0; i < clientdata.length; i++) {
+    if ((clientdata[i][0] == page)&(clientdata[i][1] == id)){
+      clientdata.splice(i,1)
+    };
+  }
+  sendData();
+  hypothesis()
+};
+
+function refresh(){
+for (var i = 0; i < clientdata.length; i++) {
+   refreshcopy(i)
+  }
+}
+function refreshcopy(i){
+    id = clientdata[i][1]
+    document.getElementById("showtitle"+clientdata[i][1]).innerHTML = "hypothesis "+(clientdata.length-i)
+    document.getElementById("hypothesistitle"+clientdata[i][1]).value = clientdata[i][2]
+    document.getElementById("datatitle"+clientdata[i][1]).value = clientdata[i][3]
+    document.getElementById("hypothesistype"+clientdata[i][1]).value = clientdata[i][4]
+    document.getElementById("idvariable"+clientdata[i][1]).value = clientdata[i][5]
+    document.getElementById('depending'+id).value = clientdata[i][6]
+    document.getElementById('depscale'+id).value = clientdata[i][7]
+    document.getElementById('independend'+id).value = clientdata[i][8]
+    document.getElementById('inorbet'+id).value = clientdata[i][9]
+    document.getElementById('independingall'+clientdata[i][1]).value = clientdata[i][10]
+      independarray = clientdata[i][10].split(';')
+      for (var j = 0; j < independarray.length-1; j++) {
+        createNextInd(id,j+1,'refresh')
+        document.getElementById('independing'+id+'_'+j).value = independarray[j]
+      }
+    document.getElementById("direction"+clientdata[i][1]).value = clientdata[i][11]
+    document.getElementById("variable1"+clientdata[i][1]).value = clientdata[i][12]
+    document.getElementById("variable1scale"+clientdata[i][1]).value = clientdata[i][13]
+    document.getElementById("variable2"+clientdata[i][1]).value = clientdata[i][14]
+    document.getElementById("variable2scale"+clientdata[i][1]).value = clientdata[i][15]
+    document.getElementById('combiningall'+id).value = clientdata[i][16]
+      combinearray = clientdata[i][16].split(';')
+      for (var j = 0; j < combinearray.length-1; j++) {
+        createNextCom(id,j+1,'refresh')
+        document.getElementById('combining'+id+'_'+j).value = combinearray[j]
+      }
+    document.getElementById('excludingall'+id).value = clientdata[i][17]
+      excludearray = clientdata[i][17].split(';')
+      for (var j = 0; j < excludearray.length-1; j++) {
+        createNextEx(id,j+1,'refresh')
+        document.getElementById('excluding'+id+'_'+j).value = excludearray[j]
+      }
+    reopen(clientdata[i][1])
+}
+function reopen(id){
+whichhypothesis(document.getElementById('hypothesistype'+id),id)
+nomordorint(document.getElementById('depscale'+id),id)
+}
+function getData(){
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "server2hypothesis.php", true);
+    ajax.send();
+    ajax.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        document.getElementById('inputdata').value = this.responseText;
+    }
+    loadingData();
+    };
+}
+
+function sendData() {
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "serverhypothesis.php", true);
+    ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    if(clientdata == []){
+      clientdata == '[]'
+    }
+    ajax.send("data="+clientdata);
+}
+
+function createNextEx(id,indexex,mode) {
+    // create the next text box if not exists
+  if(indexex==inputcounterex | mode=='refresh'){
+    if(indexex%3==2){
+    var next = $('<input>', {
+      id: 'excluding' + id + '_' + indexex,
+      type: 'text',
+      placeholder: 'value ' + (indexex+1)/3,
+      class: 'text-chain'
+    });
+    var nextrow = $('<br>');
+    }
+    if(indexex%3==1){
+    var next = $("<select>", {
+       id: 'excluding' + id + '_' + indexex
+    });
+    var nextrow = $('');
+    }
+    if(indexex%3==0){
+    var next = $('<input>', {
+      id: 'excluding' + id + '_' + indexex,
+      type: 'text',
+      placeholder: 'variable ' + (indexex+3)/3,
+      class: 'text-chain'
+    });
+    var nextrow = $('');
+    }
+    next.on('change', function() {
+      createNextEx(id,indexex + 1,mode=='normal')
+    });
+    next.appendTo($('.exclude'+id));
+    nextrow.appendTo($('.exclude'+id));
+    if(indexex%3==1){
+      $('#excluding' + id + '_' + indexex).append(`<option value="${'choose'}">${'choose'}</option><option value="${'=='}">${'= (only)'}</option><option value="${'!='}">${'!='}</option>
+                                                   <option value="${'<'}">${'<'}</option><option value="${'>'}">${'>'}</option>`);
+    }
+    document.getElementById('indexex'+id).value = indexex
+    if(mode=='refresh'){
+      inputcounterex = indexex + 1
+    }
+    else{
+      inputcounterex = parseInt(inputcounterex) + 1
+    }
+    document.getElementById('inputcounterex'+id).value = inputcounterex
+  }
+}
+
+
+function createNextDepold(id,indexdep,mode) {
+    // create the next text box if not exists
+  if(indexdep==inputcounterdep | mode=='refresh'){
+    var next = $('<input>', {
+      id: 'depending' + id + '_' + indexdep,
+      type: 'text',
+      placeholder: 'variable ' + (indexdep+1),
+      class: 'text-chain'
+    });
+    if(indexdep%4==3){
+    var nextrow = $('<br>');
+    }
+    else{
+    var nextrow = $('');
+    }
+    next.on('change', function() {
+      createNextDep(id,indexdep + 1,mode=='normal')
+    });
+    next.appendTo($('.depending'+id));
+    nextrow.appendTo($('.depending'+id));
+    document.getElementById('indexdep'+id).value = indexdep
+    if(mode=='refresh'){
+      inputcounterdep = indexdep + 1
+    }
+    else{
+      inputcounterdep = parseInt(inputcounterdep) + 1
+    }
+    document.getElementById('inputcounterdep'+id).value = inputcounterdep
+  }
+}
+
+function createNextDep(id,indexdep,mode) {
+  if(indexdep==inputcounterdep | mode=='refresh'){
+    if(indexdep%2==0){
+    var next = $('<input>', {
+      id: 'depending' + id + '_' + indexdep,
+      type: 'text',
+      placeholder: 'dependend variable ' + (indexdep/2+1),
+      class: 'text-chain'
+    });
+    }
+    if(indexdep%2==1){
+    var next = $("<select>", {
+       id: 'depending' + id + '_' + indexdep
+    });
+    }
+    if(indexdep%4==3){
+    var nextrow = $('<br>');
+    }
+    else{
+    var nextrow = $('');
+    }
+    next.on('change', function() {
+      createNextDep(id,indexdep + 1,mode=='normal')
+    });
+    next.appendTo($('.depending'+id));
+    if(indexdep%2==1){
+      $('#depending' + id + '_' + indexdep).append(`<option value="${''}">${'scale niveau'}</option><option value="${'nom'}">${'nominal'}</option>
+      <option value="${'ord'}">${'ordinal'}</option><option value="${'int'}">${'interval'}</option>`);
+    }
+    nextrow.appendTo($('.depending'+id));
+    document.getElementById('indexdep'+id).value = indexdep
+    if(mode=='refresh'){
+      inputcounterdep = indexdep + 1
+    }
+    else{
+      inputcounterdep = parseInt(inputcounterdep) + 1
+    }
+    document.getElementById('inputcounterdep'+id).value = inputcounterdep
+  }
+}
+
+function createNextInd(id,indexind,mode) {
+  if(indexind==inputcounterind & indexind < 9 | mode=='refresh'){
+    if(indexind%2==0 & indexind!=8){
+    var next = $('<input>', {
+      id: 'independing' + id + '_' + indexind,
+      type: 'text',
+      placeholder: 'independend variable ' + (indexind/2+1),
+      class: 'text-chain'
+    });
+    }
+    if(indexind==8){
+    var next = $('');
+    }
+    if(indexind%2==1){
+    var next = $("<select>", {
+       id: 'independing' + id + '_' + indexind
+    });
+    }
+    if(indexind%4==3){
+    var nextrow = $('<br>');
+    }
+    else{
+    var nextrow = $('');
+    }
+    next.on('change', function() {
+      createNextInd(id,indexind + 1,mode=='normal')
+    });
+    next.appendTo($('.independing'+id));
+    if(indexind%2==1){
+      $('#independing' + id + '_' + indexind).append(`<option value="${''}">${'choose'}</option><option value="${'inner'}">${'inner subject'}</option>
+      <option value="${'between'}">${'between subject'}</option>`);
+    }
+    nextrow.appendTo($('.independing'+id));
+    document.getElementById('indexind'+id).value = indexind
+    if(mode=='refresh'){
+      inputcounterind = indexind + 1
+    }
+    else{
+      inputcounterind = parseInt(inputcounterind) + 1
+    }
+    document.getElementById('inputcounterind'+id).value = inputcounterind
+  }
+}
+
+function createNextGr(id,indexgr,mode) {
+  if(indexgr==inputcountergr | mode=='refresh'){
+    if(indexgr==0){
+    var next = $('<input>', {
+      id: 'grouping' + id + '_' + indexgr,
+      type: 'text',
+      placeholder: 'dependend variable',
+      class: 'text-chain'
+    });
+    }
+    if((indexgr==1|indexgr%2==0)&indexgr!=0&indexgr!=2){
+    var next = $("<select>", {
+       id: 'grouping' + id + '_' + indexgr
+    });
+    }
+    if(indexgr==2){
+    var next = $('<input>', {
+      id: 'grouping' + id + '_' + indexgr,
+      type: 'text',
+      placeholder: 'independend variable',
+      class: 'text-chain'
+    });
+    }
+    if(indexgr%2==1&indexgr!=1){
+    var next = $('<input>', {
+      id: 'grouping' + id + '_' + indexgr,
+      type: 'text',
+      placeholder: 'value / group ' + (indexgr-1)/2,
+      class: 'text-chain'
+    });
+    }
+    if(indexgr==1|indexgr%4==2){
+    var nextrow = $('<br>');
+    }
+    else{
+    var nextrow = $('');
+    }
+    next.on('change', function() {
+      createNextGr(id,indexgr + 1,mode=='normal')
+    });
+    next.appendTo($('.grouping'+id));
+    if(indexgr==1){
+      $('#grouping' + id + '_' + indexgr).append(`<option value="${''}">${'scale niveau'}</option><option value="${'nom'}">${'nominal'}</option>
+      <option value="${'ord'}">${'ordinal'}</option><option value="${'int'}">${'interval'}</option>`);
+    }
+    if(indexgr%2==0&indexgr!=0&indexgr!=2){
+      $('#grouping' + id + '_' + indexgr).append(`<option value="${''}">${'choose'}</option><option value="${'=='}">${'='}</option><option value="${'!='}">${'!='}</option>
+                                                  <option value="${'<'}">${'<'}</option><option value="${'>'}">${'>'}</option>`);
+    }
+    nextrow.appendTo($('.grouping'+id));
+    document.getElementById('indexgr'+id).value = indexgr
+    if(mode=='refresh'){
+      inputcountergr = indexgr + 1
+    }
+    else{
+      inputcountergr = parseInt(inputcountergr) + 1
+    }
+    document.getElementById('inputcountergr'+id).value = inputcountergr
+  }
+}
+
+function createNextTime(id,indextime,mode) {
+  if(indextime==inputcountertime | mode=='refresh'){
+    if(indextime%2==0){
+    var next = $("<select>", {
+       id: 'timing' + id + '_' + indextime
+    });
+    }
+    if(indextime%2==1){
+    var next = $('<input>', {
+      id: 'timing' + id + '_' + indextime,
+      type: 'text',
+      placeholder: 'variable / group ' + (indextime+1)/2,
+      class: 'text-chain'
+    });
+    }
+    if(indextime%4==0){
+    var nextrow = $('<br>');
+    }
+    else{
+    var nextrow = $('');
+    }
+    next.on('change', function() {
+      createNextTime(id,indextime + 1,mode=='normal')
+    });
+    next.appendTo($('.timing'+id));
+    if(indextime==0){
+      $('#timing' + id + '_' + indextime).append(`<option value="${''}">${'Which scale niveau do your variables have?'}</option><option value="${'nom'}">${'nominal'}</option>
+      <option value="${'ord'}">${'ordinal'}</option><option value="${'int'}">${'interval'}</option>`);
+    }
+    if(indextime%2==0&indextime!=0){
+      $('#timing' + id + '_' + indextime).append(`<option value="${''}">${'choose'}</option><option value="${'=='}">${'='}</option><option value="${'!='}">${'!='}</option>
+                                                  <option value="${'<'}">${'<'}</option><option value="${'>'}">${'>'}</option>`);
+    }
+    nextrow.appendTo($('.timing'+id));
+    document.getElementById('indextime'+id).value = indextime
+    if(mode=='refresh'){
+      inputcountertime = indextime + 1
+    }
+    else{
+      inputcountertime = parseInt(inputcountertime) + 1
+    }
+    document.getElementById('inputcountertime'+id).value = inputcountertime
+  }
+}
+
+function createNextCom(id,indexcom,mode) {
+    // create the next text box if not exists
+  if(indexcom==inputcountercom | mode=='refresh'){
+    var next = $('<input>', {
+      id: 'combining' + id + '_' + indexcom,
+      type: 'text',
+      placeholder: 'hypothesis ' + (indexcom+1),
+      class: 'text-chain'
+    });
+    if(indexcom%4==3){
+    var nextrow = $('<br>');
+    }
+    else{
+    var nextrow = $('');
+    }
+    next.on('change', function() {
+      createNextCom(id,indexcom + 1,mode=='normal')
+    });
+    next.appendTo($('.combine'+id));
+    nextrow.appendTo($('.combine'+id));
+    document.getElementById('indexcom'+id).value = indexcom
+    if(mode=='refresh'){
+      inputcountercom = indexcom + 1
+    }
+    else{
+      inputcountercom = parseInt(inputcountercom) + 1
+    }
+    document.getElementById('inputcountercom'+id).value = inputcountercom
+  }
+}
+function getbasis(clickedid){
+    var name = 'basis' + String(clickedid);
+    document.getElementById(name).style.display='block';
+    click("datamining",presentrow);
+}
+function click_home() {
+    // Get the modal
+for (let i = 0; i < 3; i++) {
+eval("modal"+String(i)+"= document.getElementById('id"+String(i)+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == modal"+String(i))) {
+    eval("modal"+String(i)+".style.display"+"='none';")
+  }
+  });
+};
+}
+function click(page,id) {
+    // Get the id
+eval("basis"+id+" = document.getElementById('basis"+id+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == basis"+id)) {
+    eval("save(id,'save')")
+  }
+  });
+    // Get the modal
+for (let i = 0; i < 24; i++) {
+eval("modal"+String(i)+"= document.getElementById('id"+String(i)+"')")
+// When the user clicks anywhere outside of the modal, close it
+window.addEventListener('click', function(event) {
+  if (eval("event.target == modal"+String(i))) {
+    eval("modal"+String(i)+".style.display"+"='none';")
+  }
+  });
+};
+}
+function home() {
+  location.replace("/home.html")
+}
+function price() {
+  location.replace("/price.html")
+}
+function contact() {
+  location.replace("/contact.html")
+}
+function steps() {
+  location.replace("/steps.html")
+  localStorage.addsteps = 0;
+}
+function variable() {
+  location.replace("/variable.html")
+  localStorage.addsteps = 0;
+}
+function descriptive() {
+  location.replace("/descriptive.html")
+  localStorage.addsteps = 0;
+}
+function hypothesis() {
+  location.replace("/hypothesis.html")
+  localStorage.addsteps = 0;
+}
+function clustering() {
+  location.replace("/clustering.html");
+  localStorage.addsteps = 0;
+}
+function checkfinal() {
+  location.replace("/checkfinal.html");
+  localStorage.addsteps = 0;
+}
+function logout(clientdata) {
+  localStorage.addsteps = 0;
+  location.replace("/home.html")
+}
+function changeImage() {
+
+        if (document.getElementById("imgClickAndChange").src == "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png") 
+        {
+            document.getElementById("imgClickAndChange").src = "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png";
+        }
+        else 
+        {
+            document.getElementById("imgClickAndChange").src = "C:/Users/ra57sol/Pictures/Screenshots/Screenshot (1).png";
+        }
+    }
+
+
+var slideIndex = 1;
+
+function plusSlides(n,clickedid,nrslides) {
+  showSlides(slideIndex += n,clickedid,nrslides);
+}
+function currentSlide(n,clickedid,nrslides) {
+  showSlides(slideIndex = n,clickedid,nrslides);
+}
+function showSlides(n,clickedid,nrslides) {
+  var slides = document.getElementsByClassName("mySlides"+String(clickedid));
+  if (n > nrslides) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length/clientdata.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  slides[slideIndex-1].style.display = "block";
+}
+
+var slideIndex2 = 1;
+
+function plusSlides2(n,clickedid) {
+  showSlides2(slideIndex2 += n,clickedid);
+}
+function currentSlide2(n,clickedid) {
+  showSlides2(slideIndex2 = n,clickedid);
+}
+function showSlides2(n,clickedid) {
+  var slides = document.getElementsByClassName("graphicSlides"+String(clickedid));
+  if (n > 8) {slideIndex2 = 1}
+  if (n < 1) {slideIndex2 = 8}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  slides[slideIndex2-1].style.display = "block";
+}
+
+
+
+function wideorlong(that,id) {
+    if (that.value == "long") {
+        document.getElementById("choose1_"+String(id)).style.display = "block";
+    } else {
+        document.getElementById("choose1_"+String(id)).style.display = "none";
+    }
+}
+
+function whichgraphic(that,id) {
+    if (that.value == "") {
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "pie") {
+        document.getElementById("pie"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "barplot") {
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("barplot"+String(id)).style.display = "block";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    if (that.value == "boxplot") {
+        document.getElementById("boxplot"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    if (that.value == "histogram") {
+        document.getElementById("histogram"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("scatter"+String(id)).style.display = "none";
+        document.getElementById("variables"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "none";
+    }
+    if (that.value == "scatter") {
+        document.getElementById("scatter"+String(id)).style.display = "block";
+        document.getElementById("barplot"+String(id)).style.display = "none";
+        document.getElementById("pie"+String(id)).style.display = "none";
+        document.getElementById("boxplot"+String(id)).style.display = "none";
+        document.getElementById("histogram"+String(id)).style.display = "none";
+        document.getElementById("groupornogroup"+String(id)).style.display = "block";
+    }
+    
+}
+function groupornot(that,id) {
+    if (that.value == "yes") {
+        document.getElementById("variables"+String(id)).style.display = "block";
+    }
+    else{
+        document.getElementById("variables"+String(id)).style.display = "none";
+    }
+}
+function baryaxis(that,id) {
+    if (that.value == "") {
+        document.getElementById("missingbar"+String(id)).style.display = "none";
+        document.getElementById("variable1"+String(id)).style.display = "none";
+        document.getElementById("variable2"+String(id)).style.display = "none";
+    }
+    if (that.value == "count" | that.value == "percentage") {
+        document.getElementById("missingbar"+String(id)).style.display = "block";
+        document.getElementById("variable1"+String(id)).style.display = "block";
+        document.getElementById("variable2"+String(id)).style.display = "none";
+    }
+    if (that.value == "variable2") {
+        document.getElementById("missingbar"+String(id)).style.display = "none";
+        document.getElementById("variable1"+String(id)).style.display = "none";
+        document.getElementById("variable2"+String(id)).style.display = "block";
+    }
+}
+function hisincluded(that,id) {
+    if (that.value == "") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "none";
+        document.getElementById("onlyhis"+String(id)).style.display = "none";
+    }
+    if (that.value == "his") {
+        document.getElementById("cpd"+String(id)).style.display = "block";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "block";
+    }
+    if (that.value == "den") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "none";
+    }
+    if (that.value == "both") {
+        document.getElementById("cpd"+String(id)).style.display = "none";
+        document.getElementById("allhis"+String(id)).style.display = "block";
+        document.getElementById("onlyhis"+String(id)).style.display = "block";
+    }
+}
+function renameornot(that,id) {
+    if (that.value == "yes") {
+        document.getElementById("renameyes"+String(id)).style.display = "block";
+    }
+    else{
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+    }
+}
+function whichhypothesis(that,id) {
+    if (that.value == "") {
+        document.getElementById("dif"+String(id)).style.display = "none";
+        document.getElementById("cor"+String(id)).style.display = "none";
+    }
+    if (that.value == "dif") {
+        document.getElementById("dif"+String(id)).style.display = "block";
+        document.getElementById("cor"+String(id)).style.display = "none";
+    }
+    if (that.value == "cor") {
+        document.getElementById("dif"+String(id)).style.display = "none";
+        document.getElementById("cor"+String(id)).style.display = "block";
+    }
+}
+function innerorbetween(that,id) {
+    if (that.value == "") {
+        document.getElementById("inner"+String(id)).style.display = "none";
+        document.getElementById("between"+String(id)).style.display = "none";
+    }
+    if (that.value == "inner") {
+        document.getElementById("inner"+String(id)).style.display = "block";
+        document.getElementById("between"+String(id)).style.display = "none";
+    }
+    if (that.value == "between") {
+        document.getElementById("inner"+String(id)).style.display = "none";
+        document.getElementById("between"+String(id)).style.display = "block";
+    }
+}
+function nomordorint(that,id) {
+    if (that.value == "") {
+        document.getElementById("nomord"+String(id)).style.display = "none";
+        document.getElementById("int"+String(id)).style.display = "none";
+    }
+    if (that.value == "nom" | that.value == "ord") {
+        document.getElementById("nomord"+String(id)).style.display = "block";
+        document.getElementById("int"+String(id)).style.display = "none";
+    }
+    if (that.value == "int") {
+        document.getElementById("nomord"+String(id)).style.display = "none";
+        document.getElementById("int"+String(id)).style.display = "block";
+    }
+}
+function deforcom(that,id) {
+    if (that.value == "") {
+        document.getElementById("def"+String(id)).style.display = "none";
+        document.getElementById("com"+String(id)).style.display = "none";
+    }
+    if (that.value == "def") {
+        document.getElementById("def"+String(id)).style.display = "block";
+        document.getElementById("com"+String(id)).style.display = "none";
+    }
+    if (that.value == "com") {
+        document.getElementById("def"+String(id)).style.display = "none";
+        document.getElementById("com"+String(id)).style.display = "block";
+    }
+}
+
+function whichgroupdif(that,id) {
+    if (that.value == "") {
+        document.getElementById("one"+String(id)).style.display = "none";
+        document.getElementById("multiple"+String(id)).style.display = "none";
+    }
+    if (that.value == "one") {
+        document.getElementById("one"+String(id)).style.display = "block";
+        document.getElementById("multiple"+String(id)).style.display = "none";
+    }
+    if (that.value == "multiple") {
+        document.getElementById("one"+String(id)).style.display = "none";
+        document.getElementById("multiple"+String(id)).style.display = "block";
+    }
+}
+function clusorgroups(that,id) {
+    if (that.value == "") {
+        document.getElementById("cluster"+String(id)).style.display = "none";
+        document.getElementById("groups"+String(id)).style.display = "none";
+    }
+    if (that.value == "cluster") {
+        document.getElementById("cluster"+String(id)).style.display = "block";
+        document.getElementById("groups"+String(id)).style.display = "none";
+    }
+    if (that.value == "groups") {
+        document.getElementById("cluster"+String(id)).style.display = "none";
+        document.getElementById("groups"+String(id)).style.display = "block";
+    }
+}
+function clusternumberornot(that,id) {
+    if (that.value == "numberclus") {
+
+        document.getElementById("numberclus"+String(id)).style.display = "block";
+    } else {
+        document.getElementById("numberclus"+String(id)).style.display = "none";
+    }
+}
+function howmanyvar(that,id) {
+    if (that.value == "" | that.value == "all") {
+        document.getElementById("create"+String(id)).style.display = "none";
+        document.getElementById("spec"+String(id)).style.display = "none";
+    }
+    if (that.value == "create") {
+        document.getElementById("create"+String(id)).style.display = "block";
+        document.getElementById("spec"+String(id)).style.display = "none";
+    }
+    if (that.value == "spec") {
+        document.getElementById("create"+String(id)).style.display = "none";
+        document.getElementById("spec"+String(id)).style.display = "block";
+    }
+}
+function whichchange(that,id) {
+    if (that.value == "") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "rename") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "block";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "join") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "block";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "val") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "block";
+        document.getElementById("val"+String(id)).style.display = "block";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "spread") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "block";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+    }
+    if (that.value == "gather") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "block";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "ex") {
+        document.getElementById("whichdataset"+String(id)).style.display = "block";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "block";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "com") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "block";
+        document.getElementById("newdataset"+String(id)).style.display = "none";
+    }
+    if (that.value == "new") {
+        document.getElementById("whichdataset"+String(id)).style.display = "none";
+        document.getElementById("renameyes"+String(id)).style.display = "none";
+        document.getElementById("join"+String(id)).style.display = "none";
+        document.getElementById("change"+String(id)).style.display = "none";
+        document.getElementById("val"+String(id)).style.display = "none";
+        document.getElementById("spread"+String(id)).style.display = "none";
+        document.getElementById("gather"+String(id)).style.display = "none";
+        document.getElementById("excludeyes"+String(id)).style.display = "none";
+        document.getElementById("combineyes"+String(id)).style.display = "none";
+        document.getElementById("newdataset"+String(id)).style.display = "block";
+    }
+}
+function howchangevar(that,id) {
+    if (that.value == "") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "valtoval") {
+        document.getElementById("valtoval"+String(id)).style.display = "block";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "valtomis") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "block";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "mistoval") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "block";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "dty") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "block";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "numeric") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "block";
+        document.getElementById("relabel"+String(id)).style.display = "none";
+    }
+    if (that.value == "relabel") {
+        document.getElementById("valtoval"+String(id)).style.display = "none";
+        document.getElementById("valtomis"+String(id)).style.display = "none";
+        document.getElementById("mistoval"+String(id)).style.display = "none";
+        document.getElementById("dty"+String(id)).style.display = "none";
+        document.getElementById("numeric"+String(id)).style.display = "none";
+        document.getElementById("relabel"+String(id)).style.display = "block";
+    }
+}
+function firstyearornot(that,id) {
+    if ((!that.value.includes("yyyy"))&that.value!="") {
+        document.getElementById("firsty"+String(id)).style.display = "block";
+    }
+   else{
+        document.getElementById("firsty"+String(id)).style.display = "none";
+   }
+}
+function addsteps() {
+  if (typeof(Storage) !== "undefined") {
+    if (localStorage.addsteps) {
+      localStorage.addsteps = (Number(localStorage.addsteps)+1)%7;
+    } else {
+      localStorage.addsteps = 1;
+    }
+  if (localStorage.addsteps == 1){
+    document.getElementById("id1").style.display = "block";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 2){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "block";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 3){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "block";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 4){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "block";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 5){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "block";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 6){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "block";
+    document.getElementById("id7").style.display = "none";
+  }
+  if (localStorage.addsteps == 0){
+    document.getElementById("id1").style.display = "none";
+    document.getElementById("id2").style.display = "none";
+    document.getElementById("id3").style.display = "none";
+    document.getElementById("id4").style.display = "none";
+    document.getElementById("id5").style.display = "none";
+    document.getElementById("id6").style.display = "none";
+    document.getElementById("id7").style.display = "block";
+  }
+  }
+}
+
+function copy(page,id){
+  addRow('newrow')
+  save(id,'copy')
+  refreshcopy(0)
+  save(presentrow,'save')
+};
+
+function saveall(){
+let csvContent = "clientdata:text/csv;charset=utf-8,";
+clientdata.forEach(function(rowArray) {
+    let row = rowArray.join(",");
+    csvContent += row + "\r\n";
+});
+var encodedUri = encodeURI(csvContent);
+var link = document.createElement("a");
+link.setAttribute("href", encodedUri);
+link.setAttribute("download", "C:/Users/ra57sol/Desktop/website/csv/data.csv");
+document.body.appendChild(link); // Required for FF
+
+link.click();
+};
+
+function loadingData(){
+clientdata = document.getElementById('inputdata').value
+if(clientdata=='[]'|clientdata==''){
+clientdata=[]
+}
+else{
+clientdata = clientdata.split(',');
+clientdata_new=[]
+for (var i = 0; i < (clientdata.length/numberofinputs); i++) {
+  clientdata_new.push([])
+  for (var j = 0; j < numberofinputs; j++) {
+    clientdata_new[i].push(clientdata[i*numberofinputs+j])
+  }
+}
+clientdata=clientdata_new
+}
+j = clientdata.length
+for (var i = 0; i < j; i++) {
+ clientdata[i][1] = i
+}
+for (var i = 0; i < j; i++) {
+addRow(clientdata[j-i-1][1])
+}
+refresh()
+for (var i = 0; i < j; i++) {
+save(clientdata[i][1],'reloading')
+}
+}
+</script>
+</body>
+</html>
